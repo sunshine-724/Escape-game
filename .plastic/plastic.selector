@@ -1,0 +1,4 @@
+repository "Escape game@kazuki724@cloud"
+  path "/"
+    br "/main"
+    co "/main"
