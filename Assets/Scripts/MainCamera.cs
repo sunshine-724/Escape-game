@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class MainCamera : Player
 {
-
-    Transform mainCameraTransform = null;
+    Camera mainCamera; //カメラコンポーネントを格納
 
     // Start is called before the first frame update
     void Start()
     {
-       mainCameraTransform = gameObject.GetComponent<Transform>(); //メインカメラオブジェクトの'transform'コンポーネントを取得する
+        mainCamera = GetComponent<Camera>(); //カメラコンポーネントを取得する
     }
 
     // Update is called once per frame
@@ -24,24 +23,15 @@ public class MainCamera : Player
     //カメラを反転させる
     public void CameraReverseRotation()
     {
-        if (mainCameraTransform != null)
-        {
-            this.mainCameraTransform.rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
-            this.mainCameraTransform.Rotate(0.0f, 180.0f, 0.0f); //デバッグ
-            Debug.Log("カメラを反転させています");
-        }
-        else
-        {
-            Debug.Log("カメラオブジェクトが入手できていません");
-        }
+        mainCamera.ResetProjectionMatrix(); //シェードを取得
+        mainCamera.projectionMatrix *= Matrix4x4.Scale(new Vector3(-1, 1, 1)); //シェードの向きを変える
+        Debug.Log("カメラを反転させています");
     }
 
     //カメラを元に戻す
     public void CameraBaseRotation()
     {
-        if (mainCameraTransform != null)
-        {
-            this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-        }
+        mainCamera.ResetProjectionMatrix(); //シェードを取得
+        mainCamera.projectionMatrix *= Matrix4x4.Scale(new Vector3(1, 1, 1)); //シェードの向きを元に戻す
     }
 }
