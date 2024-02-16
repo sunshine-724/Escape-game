@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Unity.Collections.Unicode;
 
+/*プレイヤーオブジェクトにアタッチする*/
 public class Player : MonoBehaviour
 {
     /*変数宣言*/
@@ -18,7 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject jumpObject; //キャラがジャンプする
 
     /*子クラスを取得する*/
-    public CharacterMove move;
+    [SerializeField] CharacterMove characterMove;
+    [SerializeField] MainCamera mainCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,6 @@ public class Player : MonoBehaviour
         idleObject.SetActive(true); //待機をアクティブ化
 
         isJumping = false; //初期状態はfalse
-
-        this.move = new CharacterMove(); //インスタンスを生成する
     }
 
     // Update is called once per frame
@@ -47,14 +47,16 @@ public class Player : MonoBehaviour
             idleObject.SetActive(false);
             jumpObject.SetActive(false);
             runObject.SetActive(true);
-            move.Right(this); //右側に移動する      
+            mainCamera.CameraBaseRotation(); //カメラを元の向きに戻す
+            characterMove.Right(this); //右側に移動する      
         }
         else if (Input.GetKey(KeyCode.A) || (Input.GetKey(KeyCode.LeftArrow)))
         {
             idleObject.SetActive(false);
             jumpObject.SetActive(false);
             runObject.SetActive(true);
-            move.Left(this); //左側に移動する
+            mainCamera.CameraReverseRotation(); //親オブジェクトを反転させたのでカメラを反転させる
+            characterMove.Left(this); //左側に移動する
         }
         else
         {
@@ -70,7 +72,7 @@ public class Player : MonoBehaviour
             idleObject.SetActive(false);
             runObject.SetActive(false);
             jumpObject.SetActive(true);
-            move.Jump(this); //ジャンプする
+            characterMove.Jump(this); //ジャンプする
 
             isJumping = false; //連続でジャンプできないようにする
         }
