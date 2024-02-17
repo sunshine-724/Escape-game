@@ -13,8 +13,6 @@ public class Player : MonoBehaviour
     public Vector3 pos; //Playerの現在座標(読み取り専用）
 
     /*オブジェクトを取得する*/
-    [SerializeField] GameObject plane; //地面
-
     /*子オブジェクト*/
     [SerializeField] GameObject runObject; //キャラが走る
     [SerializeField] GameObject idleObject; //キャラが待機する
@@ -24,6 +22,9 @@ public class Player : MonoBehaviour
     [SerializeField] CharacterMove characterMove;
     [SerializeField] MainCamera mainCamera;
 
+    /*他クラスを取得する*/
+    [SerializeField] Planes planes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +33,6 @@ public class Player : MonoBehaviour
         runObject.SetActive(false); //走るのを非アクティブ化
         jumpObject.SetActive(false); //ジャンプを非アクティブ化
         idleObject.SetActive(true); //待機をアクティブ化
-
         isJumping = false; //初期状態はfalse
     }
 
@@ -86,17 +86,51 @@ public class Player : MonoBehaviour
     /*衝突判定*/
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //床との衝突判定
-        if (collision.gameObject == plane)
+        //床の衝突判定
+        if (planes != null)
         {
-            isJumping = true; //ジャンプを許可する
+            Debug.Log("planes is not null");
+            for (int k = 0; k < planes.childPlaneNumber; k++)
+            {
+                if (collision.gameObject == planes.plane[k])
+                {
+                    isJumping = true;
+                    Debug.Log(k + "番目の床に当たっています");
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("planes is null");
         }
 
-        
+        Debug.Log("正常にループを抜けました");
     }
 
-    /*落下判定*/
-    private void FallPlayer()
+    //public void OnCollisionStay2D(Collision2D collision)
+    //{
+    //    //床の衝突判定
+    //    for (int k = 0; k < planes.childPlaneNumber; k++)
+    //    {
+    //        Debug.Log(k+"番目");
+
+    //        if (planes.plane != null && k >= 0 && k < planes.plane.Length && planes.plane[k] != null)
+    //        {
+    //            // 以前の条件をそのままここに移動
+    //            if (collision.gameObject == planes.plane[k])
+    //            {
+    //                isJumping = true;
+    //                Debug.Log(k + "番目の床に当たっています");
+    //            }
+    //       
+//    }
+
+//    Debug.Log("正常にループを抜けました");
+//}
+
+/*落下判定*/
+private void FallPlayer()
     {
         //もし落下したらゲームオーバー画面を出す
         if(pos.y <= fallPositon)

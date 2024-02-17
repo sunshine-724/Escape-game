@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 672536080935587544}
   m_Layer: 0
-  m_Name: Tele0
+  m_Name: TeleportObject
   m_TagString: White
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

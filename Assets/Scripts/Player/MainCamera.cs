@@ -25,7 +25,6 @@ public class MainCamera : Player
     {
         mainCamera.ResetProjectionMatrix(); //シェードを取得
         mainCamera.projectionMatrix *= Matrix4x4.Scale(new Vector3(-1, 1, 1)); //シェードの向きを変える
-        Debug.Log("カメラを反転させています");
     }
 
     //カメラを元に戻す
