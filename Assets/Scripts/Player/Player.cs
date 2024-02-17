@@ -7,11 +7,13 @@ using static Unity.Collections.Unicode;
 public class Player : MonoBehaviour
 {
     /*変数宣言*/
+    private bool isJumping; //ジャンプしても良いか
+    private bool isTeleport; //(仮)
+    private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
     public Vector3 pos; //Playerの現在座標(読み取り専用）
-    public bool isJumping; //ジャンプしても良いか
 
     /*オブジェクトを取得する*/
-    [SerializeField] GameObject TileMap; //タイルマップ
+    [SerializeField] GameObject plane; //地面
 
     /*子オブジェクト*/
     [SerializeField] GameObject runObject; //キャラが走る
@@ -76,15 +78,30 @@ public class Player : MonoBehaviour
 
             isJumping = false; //連続でジャンプできないようにする
         }
+
+        /*毎フレーム落下判定する*/
+        FallPlayer();
     }
 
     /*衝突判定*/
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(collision.gameObject == TileMap)
+        //床との衝突判定
+        if (collision.gameObject == plane)
         {
             isJumping = true; //ジャンプを許可する
         }
+
         
+    }
+
+    /*落下判定*/
+    private void FallPlayer()
+    {
+        //もし落下したらゲームオーバー画面を出す
+        if(pos.y <= fallPositon)
+        {
+            Debug.Log("落下したのでゲームオーバー画面を表示します");
+        }
     }
 }

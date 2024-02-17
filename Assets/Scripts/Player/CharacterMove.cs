@@ -6,7 +6,7 @@ using UnityEngine;
 /*プレイヤーオブジェクトにアタッチする*/
 public class CharacterMove : Player
 {
-    public Vector2 jumpForce = new Vector2(0.0f, 7.0f); //ジャンプの強さ
+    public Vector2 jumpForce = new Vector2(0.0f, 15.0f); //ジャンプの強さ
     // Start is called before the first frame update
     void Start()
     {
