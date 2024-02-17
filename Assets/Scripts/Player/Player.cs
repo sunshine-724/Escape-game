@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private bool isJumping; //ジャンプしても良いか
     private bool isTeleport; //(仮)
     private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
-    public Vector3 pos; //Playerの現在座標(読み取り専用）
+    [System.NonSerialized] public Vector3 pos; //Playerの現在座標(読み取り専用）
 
     /*オブジェクトを取得する*/
     /*子オブジェクト*/
@@ -102,32 +102,11 @@ public class Player : MonoBehaviour
         }
         else
         {
+            //たまにnullになるのでnullチェックを入れて回避
             Debug.Log("planes is null");
         }
-
         Debug.Log("正常にループを抜けました");
     }
-
-    //public void OnCollisionStay2D(Collision2D collision)
-    //{
-    //    //床の衝突判定
-    //    for (int k = 0; k < planes.childPlaneNumber; k++)
-    //    {
-    //        Debug.Log(k+"番目");
-
-    //        if (planes.plane != null && k >= 0 && k < planes.plane.Length && planes.plane[k] != null)
-    //        {
-    //            // 以前の条件をそのままここに移動
-    //            if (collision.gameObject == planes.plane[k])
-    //            {
-    //                isJumping = true;
-    //                Debug.Log(k + "番目の床に当たっています");
-    //            }
-    //       
-//    }
-
-//    Debug.Log("正常にループを抜けました");
-//}
 
 /*落下判定*/
 private void FallPlayer()

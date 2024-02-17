@@ -461,7 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d2f1a8c4d6448b2a433b989b60cbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {x: 0, y: 0, z: 0}
   runObject: {fileID: 0}
   idleObject: {fileID: 0}
   jumpObject: {fileID: 0}
@@ -648,7 +647,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -672,7 +671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e875ac4ee3941819926addf98b22b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {x: 0, y: 0, z: 0}
   runObject: {fileID: 1993289610}
   idleObject: {fileID: 380290912}
   jumpObject: {fileID: 1413929915}
@@ -691,14 +689,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a27ffc0fe65b422a9233b7f5285821f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {x: 0, y: 0, z: 0}
   runObject: {fileID: 0}
   idleObject: {fileID: 0}
   jumpObject: {fileID: 0}
   characterMove: {fileID: 0}
   mainCamera: {fileID: 0}
   planes: {fileID: 0}
-  jumpForce: {x: 0, y: 15}
+  speed: 0.05
+  jumpForce: {x: 0, y: 20}
 --- !u!61 &1315182980
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1379,7 +1377,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7641272260270390231}
   - component: {fileID: 231718549116630039}
   - component: {fileID: 6866150066326018022}
-  - component: {fileID: 7437861885425827974}
+  - component: {fileID: 2125955836333272226}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!61 &7437861885425827974
+--- !u!61 &2125955836333272226
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

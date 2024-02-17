@@ -28,16 +28,6 @@ public class Planes : MonoBehaviour
             childTransform = parentPlanes.transform.GetChild(k); //子オブジェクトのtransformコンポーネントを取得する
             plane[k] = childTransform.gameObject; //子オブジェクトを順番に取得する
             Debug.Log(k + "番目のPlaneを取得しました");
-
-            if (plane[k].GetComponent<BoxCollider2D>())
-            {
-                Debug.Log("Rigidbody2D含まれてるよ");
-            }
-            else
-            {
-                Debug.Log("Rigidbody2D含まれてないよ");
-                gameObject.AddComponent<Rigidbody2D>(); // 含まれてなければ加える
-            }
         }
     }
 
