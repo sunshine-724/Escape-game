@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     private bool isTeleport; //(仮)
     private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
     [System.NonSerialized] public Vector3 pos; //Playerの現在座標(読み取り専用）
+    private int touchTeleportObject; //何番目のテレポートオブジェクトと接しているか(していない場合-1を格納)
+
+    private bool isZKey; //Zキーを押したらイベントを発生さしても良いか
 
     /*オブジェクトを取得する*/
     /*子オブジェクト*/
@@ -26,6 +29,11 @@ public class Player : MonoBehaviour
     [SerializeField] Planes planes;
     [SerializeField] TeleportObjects teleObjects;
 
+    /*クラスは同じだがインスタンスが異なる(テレポート元)*/
+    [SerializeField] TeleportObject teleObject0;
+    [SerializeField] TeleportObject teleObject1;
+    [SerializeField] TeleportObject teleObject2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +43,9 @@ public class Player : MonoBehaviour
         jumpObject.SetActive(false); //ジャンプを非アクティブ化
         idleObject.SetActive(true); //待機をアクティブ化
         isJumping = false; //初期状態はfalse
+
+        isZKey = false; //初期状態はfalse
+        touchTeleportObject = -1; //最初はどことも接していないので-1
     }
 
     // Update is called once per frame
@@ -42,6 +53,35 @@ public class Player : MonoBehaviour
     {
         /*現在座標を取得する*/
         pos = this.transform.position;
+
+        /*テレポーター関係*/
+        if(isZKey == true)
+        {
+            //もし許可が下りててZキーが押されたら
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+               switch (touchTeleportObject)
+                {
+                    case 0:
+                        teleObject0.Teleport(this); //テレポートする
+                        break;
+
+                    case 1:
+                        teleObject1.Teleport(this); //テレポートする
+                        break;
+
+                    case 2:
+                        teleObject2.Teleport(this); //テレポートする
+                        break;
+
+                    default:
+                        Debug.Log("そのテレポーターは登録されていません");
+                        break;
+                }
+
+                isZKey = false; //一度無効化する
+            }
+        }
 
         /*キーを取得する*/
         //水平キーを取得する
@@ -96,7 +136,7 @@ public class Player : MonoBehaviour
                 if (collision.gameObject == planes.plane[k])
                 {
                     isJumping = true;
-                    Debug.Log(k + "番目の床に当たっています");
+                    //Debug.Log(k + "番目の床に当たっています");
                     break;
                 }
             }
@@ -110,7 +150,7 @@ public class Player : MonoBehaviour
     }
 
     //テレポーターとの接地判定
-    private void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         //nullチェック(nullの場合アクセスするとNullReferenceを返されるので判定しない)
         if (teleObjects != null)
@@ -123,10 +163,11 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log(k + "番目のテレポーターと接しています");
                     //そのテレポーターが使用可能なら指定された所へテレポートする
-                    if (teleObjects.childObjects[k].isEnter == true)
+                    if (teleObjects.childObjects[k].isTeleport == true)
                     {
                         Debug.Log("接しているテレポーターは使用可能です");
-                        teleObjects.Teleport(); //テレポートする
+                        isZKey = true; //Zキーを押したら反応するようにする
+                        touchTeleportObject = k; //接しているテレポーターに設定する
                     }
                     else
                     {
@@ -135,7 +176,15 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("テレポーターと接していません");
+                  
+                }
+
+                //どのテレポーターとも接していない場合
+                if (k ==teleObjects.childObjectNumbers)
+                {
+                    Debug.Log("どのテレポーターとも接していません");
+                    isZKey = false; //Zキーを押しても反応しないようにする
+                    touchTeleportObject = -1; //どことも接していないので
                 }
             }
         }
