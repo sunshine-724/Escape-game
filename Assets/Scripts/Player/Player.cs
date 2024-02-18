@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 
     /*他クラスを取得する*/
     [SerializeField] Planes planes;
+    [SerializeField] TeleportObjects teleObjects;
 
     // Start is called before the first frame update
     void Start()
@@ -89,7 +90,7 @@ public class Player : MonoBehaviour
         //床の衝突判定
         if (planes != null)
         {
-            Debug.Log("planes is not null");
+            //Debug.Log("planes is not null");
             for (int k = 0; k < planes.childPlaneNumbers; k++)
             {
                 if (collision.gameObject == planes.plane[k])
@@ -99,17 +100,53 @@ public class Player : MonoBehaviour
                     break;
                 }
             }
+            //Debug.Log("正常にループを抜けました");
         }
         else
         {
             //たまにnullになるのでnullチェックを入れて回避
-            Debug.Log("planes is null");
+            //Debug.Log("planes is null");
         }
-        Debug.Log("正常にループを抜けました");
     }
 
-/*落下判定*/
-private void FallPlayer()
+    //テレポーターとの接地判定
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //nullチェック(nullの場合アクセスするとNullReferenceを返されるので判定しない)
+        if (teleObjects != null)
+        {
+            //テレポーターとの衝突判定
+            for (int k = 0; k < teleObjects.childObjectNumbers; k++)
+            {
+                /*テレポーターと接しているか*/
+                if ((collision.gameObject == teleObjects.childObjects[k].gameobject))
+                {
+                    Debug.Log(k + "番目のテレポーターと接しています");
+                    //そのテレポーターが使用可能なら指定された所へテレポートする
+                    if (teleObjects.childObjects[k].isEnter == true)
+                    {
+                        Debug.Log("接しているテレポーターは使用可能です");
+                        teleObjects.Teleport(); //テレポートする
+                    }
+                    else
+                    {
+                        Debug.Log("接しているテレポーターは使用できません");
+                    }
+                }
+                else
+                {
+                    Debug.Log("テレポーターと接していません");
+                }
+            }
+        }
+        else
+        {
+            //Debug.Log("teleObjects is null");
+        }
+    }
+
+    /*落下判定*/
+    private void FallPlayer()
     {
         //もし落下したらゲームオーバー画面を出す
         if(pos.y <= fallPositon)

@@ -467,6 +467,7 @@ MonoBehaviour:
   characterMove: {fileID: 0}
   mainCamera: {fileID: 650658828}
   planes: {fileID: 0}
+  teleObjects: {fileID: 0}
 --- !u!1 &711364529
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +551,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6486191858800403641, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
       propertyPath: m_Name
-      value: TeleportObject2
+      value: TeleportObject1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486191858800403641, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
+      propertyPath: m_TagString
+      value: Black
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -605,7 +610,6 @@ GameObject:
   - component: {fileID: 1315182977}
   - component: {fileID: 1315182978}
   - component: {fileID: 1315182979}
-  - component: {fileID: 1315182980}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -677,6 +681,7 @@ MonoBehaviour:
   characterMove: {fileID: 1315182979}
   mainCamera: {fileID: 650658828}
   planes: {fileID: 1770990150}
+  teleObjects: {fileID: 2058434950}
 --- !u!114 &1315182979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,53 +700,9 @@ MonoBehaviour:
   characterMove: {fileID: 0}
   mainCamera: {fileID: 0}
   planes: {fileID: 0}
-  speed: 0.05
-  jumpForce: {x: 0, y: 20}
---- !u!61 &1315182980
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1315182975}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.78, y: 0.78}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.6, y: 1.6}
-  m_EdgeRadius: 0
+  teleObjects: {fileID: 0}
+  speed: 0.0375
+  jumpForce: {x: 0, y: 40}
 --- !u!1 &1413929915
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,11 +833,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!1 &1447345115 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6486191858800403641, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
-  m_PrefabInstance: {fileID: 1623806087629359395}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1447345116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 672536080935587544, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
@@ -997,7 +953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6486191858800403641, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
       propertyPath: m_Name
-      value: TeleportObject3
+      value: TeleportObject2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1053,7 +1009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentPlanes: {fileID: 1770990149}
   plane: []
-  childPlaneNumber: 0
+  childPlaneNumbers: 0
 --- !u!1 &1993289610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,10 +1237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32aa409084e5b4abd87f5abdbe9c5ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tele0: {fileID: 1447345115}
-  tele1: {fileID: 0}
-  tele2: {fileID: 0}
-  colorList: 
+  childObjectNumbers: 0
 --- !u!1 &2073838338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 672536080935587544, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.35
+      value: -4.36
       objectReference: {fileID: 0}
     - target: {fileID: 672536080935587544, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1433,7 +1386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6486191858800403641, guid: 553293469c2d14fe795e4ca1faac4e59, type: 3}
       propertyPath: m_Name
-      value: TeleportObject
+      value: TeleportObject0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

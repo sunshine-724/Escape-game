@@ -7,12 +7,12 @@ using UnityEngine;
 public class TeleportObjects : MonoBehaviour
 {
     /*ゲームオブジェクト*/
-    ChildTeleportObject[] childObjects; //それぞれの子オブジェクトを取得する
+    public ChildTeleportObject[] childObjects; //それぞれの子オブジェクトを取得する
                                         //同スクリプト内（名前空間が同じ）ならば他クラスの取得は不要
 
     /*変数宣言*/
     Transform childTransform; //子オブジェクトのtransformコンポーネント
-    int childObjectNumbers; //子オブジェクトの数(後で検索をかける）
+    public int childObjectNumbers; //子オブジェクトの数(後で検索をかける）
     int grandchildObjectNumbers; //孫オブジェクトの数（テレポートの色の種類の数と同値）
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class TeleportObjects : MonoBehaviour
     {
         childObjectNumbers = this.transform.childCount; //子オブジェクトの数を取得する
         grandchildObjectNumbers = ChildTeleportObject.GetColorNumber(); //孫オブジェクトの数(テレポーターの数)を取得する
-
+      
         /*必要な分だけ配列を生成してインスタンスを作成する*/
         childObjects = new ChildTeleportObject[childObjectNumbers];
 
@@ -46,12 +46,24 @@ public class TeleportObjects : MonoBehaviour
                 Debug.Log("存在しないタグです");
             }
         }
+
+        //デバッグ
+        for(int k = 0; k < childObjectNumbers; k++)
+        {
+            Debug.Log(k + "番目のテレポーターのx座標は" + childObjects[k].gameobject.transform.position.x + "です");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    /*特定の条件下でキー操作をしてテレポートを使用可能にする*/
+    public  void Teleport()
+    {
+        
     }
 }
 
@@ -67,11 +79,12 @@ public class ChildTeleportObject
 
     public GameObject gameobject;
     public Color isColor; //オブジェクト自身が今何色のテレポーターをしているか（アクティブか）
+    public bool isEnter; //テレポートを使えるかどうか
 
     /*コンストラクタ*/
     public ChildTeleportObject()
     {
-        
+        isEnter = false; //最初は全てfalseにする;
     }
 
     /*enumの要素数を取得する*/
