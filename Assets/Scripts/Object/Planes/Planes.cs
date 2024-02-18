@@ -11,19 +11,19 @@ public class Planes : MonoBehaviour
     public GameObject[] plane; //個々の子オブジェクトを全て格納した配列
 
     /*変数宣言*/
-    public int childPlaneNumber; //地面の数
+    public int childPlaneNumbers; //地面の数
     private Transform childTransform;  //子オブジェクトのtransformコンポーネント
 
     // Start is called before the first frame update
     void Start()
     {
-        childPlaneNumber = parentPlanes.transform.childCount; //子オブジェクトの数を取得する
-        plane = new GameObject[childPlaneNumber];
+        childPlaneNumbers = parentPlanes.transform.childCount; //子オブジェクトの数を取得する
+        plane = new GameObject[childPlaneNumbers];
 
-        Debug.Log("子オブジェクトの数は" + childPlaneNumber + "です");
+        Debug.Log("子オブジェクトの数は" + childPlaneNumbers + "です");
 
         /*必要な分だけ子オブジェクトを取得する*/
-        for (int k = 0; k < childPlaneNumber; k++)
+        for (int k = 0; k < childPlaneNumbers; k++)
         {
             childTransform = parentPlanes.transform.GetChild(k); //子オブジェクトのtransformコンポーネントを取得する
             plane[k] = childTransform.gameObject; //子オブジェクトを順番に取得する

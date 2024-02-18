@@ -1,9 +1,61 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /*'TeleportObjects'オブジェクトにアタッチする*/
 public class TeleportObjects : MonoBehaviour
+{
+    /*ゲームオブジェクト*/
+    ChildTeleportObject[] childObjects; //それぞれの子オブジェクトを取得する
+                                        //同スクリプト内（名前空間が同じ）ならば他クラスの取得は不要
+
+    /*変数宣言*/
+    Transform childTransform; //子オブジェクトのtransformコンポーネント
+    int childObjectNumbers; //子オブジェクトの数(後で検索をかける）
+    int grandchildObjectNumbers; //孫オブジェクトの数（テレポートの色の種類の数と同値）
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        childObjectNumbers = this.transform.childCount; //子オブジェクトの数を取得する
+        grandchildObjectNumbers = ChildTeleportObject.GetColorNumber(); //孫オブジェクトの数(テレポーターの数)を取得する
+
+        /*必要な分だけ配列を生成してインスタンスを作成する*/
+        childObjects = new ChildTeleportObject[childObjectNumbers];
+
+        for(int k = 0; k < childObjectNumbers; k++)
+        {
+            childObjects[k] = new ChildTeleportObject(); //インスタンスを作成する
+
+            childTransform = this.transform.GetChild(k); //各々の子オブジェクトのtransformを取得
+            childObjects[k].gameobject = childTransform.gameObject; //子オブジェクトの参照先を格納する
+            
+            if (childObjects[k].gameobject.tag == "Black")
+            {
+                childObjects[k].isColor =ChildTeleportObject.Color.BLACK;
+                Debug.Log("タグはBlackです");
+            }
+            else if (childObjects[k].gameobject.tag == "White")
+            {
+                childObjects[k].isColor = ChildTeleportObject.Color.WHITE;
+                Debug.Log("タグはWhiteです");
+            }
+            else
+            {
+                Debug.Log("存在しないタグです");
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}
+
+public class ChildTeleportObject
 {
     //各テレポーターの色の種類(後で増やすかも)
     //enum 定数を構造体形式で保存可能 呼び出す際はColor.Blackなどで呼び出す　またそれぞれ0,1,…で識別できる
@@ -13,68 +65,20 @@ public class TeleportObjects : MonoBehaviour
         WHITE,
     }
 
-    /*オブジェクトを取得する(インスペクターで)*/
-    [SerializeField] GameObject tele0;
-    [SerializeField] GameObject tele1;
-    [SerializeField] GameObject tele2;
+    public GameObject gameobject;
+    public Color isColor; //オブジェクト自身が今何色のテレポーターをしているか（アクティブか）
 
-    /*変数宣言*/
-    [SerializeField] const int teleportObjectsNumber = 3; //生成するテレポーターの数
-    [SerializeField] Color[] colorList; //テレポーターをどの色にするかインスペクターで指定できる配列
-
-    // Start is called before the first frame update
-    void Start()
+    /*コンストラクタ*/
+    public ChildTeleportObject()
     {
-        colorList = new Color[teleportObjectsNumber]; //配列をインスタンス化
-
         
-
-
-
-        //teleportObjects = new TeleportObject[teleportObjectsNumber]; //指定したオブジェクトの数の配列を確保する
-
-        //for (int k = 0; k < teleportObjectsNumber; k++)
-        //{
-        //    teleportObjects[k] = new TeleportObject(); //配列を初期化
-        //}
-
-        //if (tele0 = null)
-        //{
-        //    Debug.Log("オブジェクトが正しく参照されていません");
-        //}
-        //Debug.Log("テレポートオブジェクトを生成しました");
-
-        ///*オブジェクトの参照を可能にする(ここはもうちょっと改善の余地あり)*/
-        //teleportObjects[0].teleportObject = tele0;
-        //teleportObjects[1].teleportObject = tele1;
-        //teleportObjects[2].teleportObject = tele2;
-
-        ///*もし必要ならここに各テレポーターの初期情報データのメソッドをここに入れる*/
-        //for (int k = 0; k < teleportObjectsNumber; k++)
-        //{
-        //    if (teleportObjects[k].tag == "Black")
-        //    {
-        //        teleportObjects[k].isColor = Color.BLACK;
-        //        Debug.Log("色を黒にします");
-        //    }
-        //    else if (teleportObjects[k].tag == "White")
-        //    {
-        //        teleportObjects[k].isColor = Color.WHITE;
-        //        Debug.Log("色を白にします");
-        //    }
-        //    else
-        //    {
-        //        Debug.Log(k + "番目のタグで色が指定されていないので指定してください");
-        //        /*また色を追加するかもしれない*/
-        //    }
-
-        //    Debug.Log("デバッグ");
-        //}
     }
 
-    // Update is called once per frame
-    void Update()
+    /*enumの要素数を取得する*/
+    public static int GetColorNumber()
     {
-
+        int number; //テレポーターの色の数
+        number = Enum.GetValues(typeof(Color)).Length; //色の数を取得する
+        return number;
     }
 }

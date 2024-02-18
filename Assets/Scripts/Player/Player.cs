@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         if (planes != null)
         {
             Debug.Log("planes is not null");
-            for (int k = 0; k < planes.childPlaneNumber; k++)
+            for (int k = 0; k < planes.childPlaneNumbers; k++)
             {
                 if (collision.gameObject == planes.plane[k])
                 {
