@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Planes
+    uniqueID: 1809982533
+    locked: 0
+  - name: Canvas
+    uniqueID: 4209970237
+    locked: 0

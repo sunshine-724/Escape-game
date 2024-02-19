@@ -10,18 +10,28 @@ public class GameStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //ボタンがクリックされたらGameSceneに移動する
     public void ClickStart()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    //ゲーム終了:ボタンから呼び出す
+    public void EndGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了(エディターでプレイ時)
+#else
+        Application.Quit();//ゲームプレイ終了(ビルドでプレイ時)
+#endif
     }
 }
