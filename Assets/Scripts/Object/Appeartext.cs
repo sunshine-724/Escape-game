@@ -17,17 +17,19 @@ public class Appeartext : MonoBehaviour
     int strNumber; //文字列の要素数
 
 
-    // Start is called before the first frame update
-    void Start()
+    //初期化
+    private void Awake()
     {
         str = str + " "; //ヌル文字を追加
         textComponent = this.GetComponent<Text>(); //textコンポーネントを取得
 
         strNumber = str.Length; //要素数を取得する
         Debug.Log("文字列の要素数は" + strNumber + "です");
-
-        StartCoroutine(AppearText(str)); //徐々に文字を出す
-
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -37,7 +39,7 @@ public class Appeartext : MonoBehaviour
     }
 
     /*最初にテキストを出現させるところ*/
-    IEnumerator AppearText(string Strings)
+    public IEnumerator AppearText()
     {
         for (int j = 0; j < strNumber; j++)
         {
@@ -52,9 +54,9 @@ public class Appeartext : MonoBehaviour
             {
                 sound.Typing();
             }
-            Debug.Log(j + "文字出力しました");
             yield return new WaitForSeconds(textSpeed); //指定した秒数だけ遅れる
-
         }
+
+        Debug.Log("テキストの出力が完了しました");
     }
 }

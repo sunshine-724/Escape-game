@@ -10,11 +10,15 @@ public class Se : MonoBehaviour
     //ここから下は必要な音源ファイルをインスペクターから指定する
     [SerializeField] AudioClip typing;
 
+
+    private void Awake()
+    {
+        audioSource = this.GetComponent<AudioSource>(); //アタッチしたオブジェクトのコンポーネントを取得する
+    }
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = this.GetComponent<AudioSource>(); //アタッチしたオブジェクトのコンポーネントを取得する
-
+        
     }
 
     // Update is called once per frame
@@ -28,6 +32,7 @@ public class Se : MonoBehaviour
     {
         if (audioSource == null)
         {
+           
             Debug.Log("AudioSourceの取得に失敗しました");
         }
         else
