@@ -14,8 +14,7 @@ public class Planes : MonoBehaviour
     public int childPlaneNumbers; //地面の数
     private Transform childTransform;  //子オブジェクトのtransformコンポーネント
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         childPlaneNumbers = parentPlanes.transform.childCount; //子オブジェクトの数を取得する
         plane = new GameObject[childPlaneNumbers];
@@ -29,6 +28,11 @@ public class Planes : MonoBehaviour
             plane[k] = childTransform.gameObject; //子オブジェクトを順番に取得する
             Debug.Log(k + "番目のPlaneを取得しました");
         }
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+    
     }
 
     // Update is called once per frame

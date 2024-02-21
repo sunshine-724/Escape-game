@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
 {
     /*他クラス取得する*/
     [SerializeField] Player player; //プレイヤークラス
-    [SerializeField] Image_Opening image_Opening; //image_Openingクラスを取得する
+    [SerializeField] CanvasEvent0 canvasEvent0; //イベント0のキャンバス
+    [SerializeField] CanvasEvent1 canvasEvent1; //イベント1のキャンバス
+
 
     /*変数宣言(これらのプロパティはシーンを跨いでも保持させる)*/
     private bool[] isEvents = new bool[10]; //各イベントを開始しても良いか((とりあえず今は10にする(あとで調整可))
@@ -29,21 +31,15 @@ public class GameManager : MonoBehaviour
     {
 
         /*イベント1開始時期について*/
-        //もしZキーが押されて、イベント開始許可が下りていたら
-        if ((Input.GetKeyDown(KeyCode.Z)))
+        //イベント開始許可が下りていたら
+        if (CheckEvent(1))
         {
-            Debug.Log("Zキーが押されました");
-            if (CheckEvent(1))
-            {
-                StartEvent1(); //イベント1実行
-            }
-            else
-            {
-                Debug.Log("イベント1開始許可が出てません");
-            }
-
+            StartEvent1(); //イベント1実行
         }
-
+        else
+        {
+            Debug.Log("イベント1開始許可が出てません");
+        }
     }
 
     //イベントの許可を更新する
@@ -90,11 +86,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("現在実行中のイベントは" + (k) + "です");
     }
 
+    /*イベント0を開始する*/
+    private void StartEvent0()
+    {
+        Debug.Log("イベント0が開始されました");
+    }
+
     /*イベント1を開始する(イベント進行はメソッドを追うこと)*/
     private void StartEvent1()
     {
-        StartCoroutine(image_Opening.Fade());
-        Debug.Log("フェードインが実行されます");
+        Debug.Log("イベント1が開始されました");
     }
 }
 

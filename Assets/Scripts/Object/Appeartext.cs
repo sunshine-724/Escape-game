@@ -36,7 +36,7 @@ public class Appeartext : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+      
     }
 
     /*最初にテキストを出現させるところ*/
@@ -58,7 +58,6 @@ public class Appeartext : MonoBehaviour
             }
             yield return new WaitForSeconds(textSpeed); //指定した秒数だけ遅れる
         }
-
         Debug.Log("テキストの出力が完了しました");
     }
 }

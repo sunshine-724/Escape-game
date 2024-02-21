@@ -5,7 +5,6 @@ using UnityEngine;
 public class Event1Text1 : MonoBehaviour
 {
     /*他クラスを取得する*/
-    [SerializeField] GameManager gameManager;
     [SerializeField] Appeartext appeartext;
 
     private bool outputText = true; //テキストを出力しても良いか(最初はtrue)
@@ -32,7 +31,6 @@ public class Event1Text1 : MonoBehaviour
     {
         if (outputText)
         {
-            Debug.Log("メソッドを実行する");
             appeartext.AppearCenterText(); //テキストを出力させる
             outputText = false; //2度とこのメソッドが実行できないようにする
         }

@@ -8,8 +8,6 @@ using TMPro;
 public class Image_Opening : MonoBehaviour
 {
     [SerializeField] GameManager gameManager; //ゲームマネージャークラス
-    [SerializeField] Event1Text1 event1Text1; //event1Text1クラスを取得する
-    [SerializeField] ImagePrison imagePrison; //imagePrisonクラスを取得する
 
     /*変数宣言*/
     float alpha; //出力する透明度
@@ -62,10 +60,6 @@ public class Image_Opening : MonoBehaviour
             childObjectText.color = new Color(1, 1, 1, alpha);
             yield return null;
         }
-
-        Debug.Log("Fadeメソッドを実行し終えました");
-
-        imagePrison.ObjectSetActive(true); //指定画像をアクティブ化する
-        event1Text1.TextObjectActive(); //テキストを出力する
+        gameManager.UpdateEvent(1); //イベント1を許可する
     }
 }
