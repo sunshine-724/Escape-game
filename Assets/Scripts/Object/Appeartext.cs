@@ -13,7 +13,7 @@ public class Appeartext : MonoBehaviour
     /*変数宣言*/
     [SerializeField] string str; //配列で出力したい文字列を管理する
     [SerializeField] float textSpeed; //テキストを出力するスピードを決める(s) (0.05推薦)
-    TextMeshProUGUI textComponent;
+    Text textComponent;
     string outputStr; //実際出力する文字配列(毎回初期化される)
     int strNumber; //文字列の要素数
 
@@ -22,7 +22,7 @@ public class Appeartext : MonoBehaviour
     private void Awake()
     {
         str = str + " "; //ヌル文字を追加
-        textComponent = this.GetComponent<TextMeshProUGUI>(); //textコンポーネントを取得
+        textComponent = this.GetComponent<Text>(); //textコンポーネントを取得
 
         strNumber = str.Length; //要素数を取得する
         Debug.Log("文字列の要素数は" + strNumber + "です");

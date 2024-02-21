@@ -20,7 +20,7 @@ public class Image_Opening : MonoBehaviour
     
     /*子オブジェクト関連*/
     Transform childObjectTransform; //子オブジェクトのtransform
-    TextMeshProUGUI childObjectText; //テキストコンポーネント
+    Text childObjectText; //テキストコンポーネント
     
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class Image_Opening : MonoBehaviour
         childObjectTransform = this.transform.GetChild(0); //子オブジェクトを取得
         if(childObjectTransform != null)
         {
-            childObjectText = childObjectTransform.gameObject.GetComponent<TextMeshProUGUI>(); //子オブジェクトのテキストコンポーネントを取得する
+            childObjectText = childObjectTransform.gameObject.GetComponent<Text>(); //子オブジェクトのテキストコンポーネントを取得する
         }else
         {
             Debug.Log("子オブジェクトを取得できませんでした");
