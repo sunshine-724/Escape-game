@@ -39,7 +39,7 @@ public class Appeartext : MonoBehaviour
     }
 
     /*最初にテキストを出現させるところ*/
-    public IEnumerator AppearText()
+    public IEnumerator AppearRightText()
     {
         for (int j = 0; j < strNumber; j++)
         {
