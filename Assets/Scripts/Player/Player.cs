@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 
     /*子クラスを取得する*/
     [SerializeField] CharacterMove characterMove;
-    [SerializeField] MainCamera mainCamera;
+    [SerializeField] MainCameraManager mainCamera;
 
     /*他クラスを取得する*/
     [SerializeField] Planes planes;

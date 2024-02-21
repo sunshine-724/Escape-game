@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /*他クラス取得する*/
+    [SerializeField] Player player; //プレイヤークラス
+    [SerializeField] Image_Opening image_Opening; //image_Openingクラスを取得する
+
     /*変数宣言(これらのプロパティはシーンを跨いでも保持させる)*/
     private bool[] isEvents = new bool[10]; //各イベントを開始しても良いか((とりあえず今は10にする(あとで調整可))
 
@@ -23,7 +27,23 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-       
+
+        /*イベント1開始時期について*/
+        //もしZキーが押されて、イベント開始許可が下りていたら
+        if ((Input.GetKeyDown(KeyCode.Z)))
+        {
+            Debug.Log("Zキーが押されました");
+            if (CheckEvent(1))
+            {
+                StartEvent1(); //イベント1実行
+            }
+            else
+            {
+                Debug.Log("イベント1開始許可が出てません");
+            }
+
+        }
+
     }
 
     //イベントの許可を更新する
@@ -39,7 +59,6 @@ public class GameManager : MonoBehaviour
             isEvents[k] = true;
             Debug.Log("イベント" + k + "の開始許可が下りました");
         }
-
     }
 
     //指定されたイベントを開始しても良いかyes,noで返す
@@ -69,6 +88,13 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("現在実行中のイベントは" + (k) + "です");
+    }
+
+    /*イベント1を開始する(イベント進行はメソッドを追うこと)*/
+    private void StartEvent1()
+    {
+        StartCoroutine(image_Opening.Fade());
+        Debug.Log("フェードインが実行されます");
     }
 }
 

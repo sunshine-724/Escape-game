@@ -22,7 +22,7 @@ public class Text_Opening : MonoBehaviour
 
     private void Opening()
     {
-        StartCoroutine(appeartext.AppearRightText()); //右から徐々に文字を出す
+        StartCoroutine(appeartext.AppearCenterText()); //右から徐々に文字を出す
         gameManager.UpdateEvent(1); //イベント1を許可する
     }
 }

@@ -46,6 +46,15 @@ TagManager:
   - name: Planes
     uniqueID: 1809982533
     locked: 0
-  - name: Canvas
+  - name: ImageOrObjects
+    uniqueID: 4205530989
+    locked: 0
+  - name: Canvas_Event1
+    uniqueID: 707066971
+    locked: 0
+  - name: Player
+    uniqueID: 1908210095
+    locked: 0
+  - name: Canvas_Event0
     uniqueID: 4209970237
     locked: 0

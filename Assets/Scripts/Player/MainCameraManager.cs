@@ -4,14 +4,14 @@ using UnityEngine;
 
 /*メインカメラオブジェクトにアタッチする*/
 
-public class MainCamera : Player
+public class MainCameraManager : Player
 {
     Camera mainCamera; //カメラコンポーネントを格納
 
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera = GetComponent<Camera>(); //カメラコンポーネントを取得する
+        mainCamera = this.GetComponent<Camera>(); //カメラコンポーネントを取得する
     }
 
     // Update is called once per frame
