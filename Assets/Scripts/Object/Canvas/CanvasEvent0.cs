@@ -7,32 +7,27 @@ public class CanvasEvent0 : MonoBehaviour
 
     [SerializeField] Image_Opening image_Opening; //image_Openingクラスを取得する
     [SerializeField] Text_Opening text_Opening;
-    private bool isFadein =false;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(text_Opening.Opening());
-        StartCoroutine(EndText_Opening());
+        StartCoroutine(StartEvent0()); //デバッグ
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (isFadein)
-            {
-                Debug.Log("fadeメソッド開始");
-                StartCoroutine(image_Opening.Fade()); //フェードインさせる
-                isFadein = false; //2度と条件を満たさないようにする
-            }
-        }
+    
     }
 
-    private IEnumerator EndText_Opening()
+    public IEnumerator StartEvent0()
     {
-        yield return StartCoroutine(text_Opening.Opening()); //テキストを全部出力するまで待つ
-        isFadein = true; //フェードインする許可を与える
+        Debug.Log("実行中");
+        yield return StartCoroutine(text_Opening.Opening());
+        Debug.Log("実行完了");
+        Debug.Log("２つ実行中");
+        StartCoroutine(text_Opening.ThisObjectFadeIn());
+        yield return StartCoroutine(image_Opening.ThisObjectFadeIn());
+        Debug.Log("実行完了");
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*Image_Prisonオブジェクトにアタッチ*/
-public class ImagePrison : MonoBehaviour
+public class Image_Event1 : MonoBehaviour
 {
+    [SerializeField] FadeIn fadeIn;
 
     // Start is called before the first frame update
     void Start()
@@ -18,16 +19,8 @@ public class ImagePrison : MonoBehaviour
       
     }
 
-    //引数によってアクティブ状態を切り替える
-    public void ObjectSetActive(bool active)
+    public void ThisObjectFadeIn()
     {
-        if (active == true)
-        {
-            this.gameObject.SetActive(true);
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
+        StartCoroutine(fadeIn.Fade()); //フェードインする
     }
 }

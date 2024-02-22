@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*Text_Openingにアタッチ*/
-public class Text_Opening : MonoBehaviour
+public class Text1_2_1 : MonoBehaviour
 {
-    /*他クラスを取得する*/
-    [SerializeField] Appeartext appeartext;
+
     [SerializeField] FadeIn fadeIn;
-    [SerializeField] CanvasEvent0 canvasEvent0;
+    [SerializeField] Appeartext appeartext;
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +17,10 @@ public class Text_Opening : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
-    public IEnumerator Opening()
+    public IEnumerator Starting()
     {
         StartCoroutine(appeartext.AppearCenterText()); //真ん中から徐々に文字を出す
         yield return StartCoroutine(appeartext.AppearCenterText()); //このメソッドを文字を出力できるまで止める
