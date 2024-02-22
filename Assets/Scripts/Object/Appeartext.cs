@@ -50,7 +50,7 @@ public class Appeartext : MonoBehaviour
             // Nullチェック
             if (sound == null)
             {
-                Debug.Log("soundが設定されていません");
+                //Debug.Log("soundが設定されていません");
             }
             else
             {

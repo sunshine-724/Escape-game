@@ -27,7 +27,6 @@ public class Text_Opening : MonoBehaviour
     {
         StartCoroutine(appeartext.AppearCenterText()); //真ん中から徐々に文字を出す
         yield return StartCoroutine(appeartext.AppearCenterText()); //このメソッドを文字を出力できるまで止める
-        Debug.Log("メソッドを止めました");
 
         /*再開したら*/
         end = true;

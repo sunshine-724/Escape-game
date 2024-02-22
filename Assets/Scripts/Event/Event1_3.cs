@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Event1Text3 : MonoBehaviour
+public class Event1_3 : MonoBehaviour
 {
+    private void Awake()
+    {
+        this.gameObject.SetActive(false);
+    }
     // Start is called before the first frame update
     void Start()
     {

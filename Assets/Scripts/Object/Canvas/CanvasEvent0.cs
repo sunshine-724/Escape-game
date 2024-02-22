@@ -25,6 +25,7 @@ public class CanvasEvent0 : MonoBehaviour
             {
                 Debug.Log("fadeメソッド開始");
                 StartCoroutine(image_Opening.Fade()); //フェードインさせる
+                isFadein = false; //2度と条件を満たさないようにする
             }
         }
     }

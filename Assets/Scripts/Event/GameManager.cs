@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("イベント1開始許可が出てません");
+            //Debug.Log("イベント1開始許可が出てません");
         }
     }
 
@@ -95,7 +95,9 @@ public class GameManager : MonoBehaviour
     /*イベント1を開始する(イベント進行はメソッドを追うこと)*/
     private void StartEvent1()
     {
+        canvasEvent1.isStart = true;
         Debug.Log("イベント1が開始されました");
+        isEvents[1] = false; //連続して開始しないように
     }
 }
 
