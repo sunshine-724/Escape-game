@@ -33,7 +33,7 @@ public class Appeartext : MonoBehaviour
         //nullチェックをする
         if(str2 != null)
         {
-            str = str + " "; //ヌル文字を追加
+            str2 = str2 + " "; //ヌル文字を追加
             textComponent = this.GetComponent<Text>(); //textコンポーネントを取得
 
             str2Number = str2.Length; //要素数を取得する

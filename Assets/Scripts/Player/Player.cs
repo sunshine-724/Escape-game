@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private int touchTeleportObject; //何番目のテレポートオブジェクトと接しているか(していない場合-1を格納)
 
     private bool isZKey; //Zキーを押したらイベントを発生さしても良いか
+    public bool isMove; //プレイヤーが動いても良いか
 
     /*オブジェクトを取得する*/
     /*子オブジェクト*/

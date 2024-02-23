@@ -41,7 +41,8 @@ public class Event1_1Manager : MonoBehaviour
 
     public IEnumerator Ending()
     {
-        image_Event1.ThisObjectFadeIn();
+        StartCoroutine(image_Event1.ThisObjectFadeIn());
+
         yield return StartCoroutine(text1_1_1.ThisObjectFadeIn());
 
         Debug.Log("イベント1_1のエンディングログ");

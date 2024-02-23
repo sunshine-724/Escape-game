@@ -43,14 +43,30 @@ public class Event1_3Manager : MonoBehaviour
         nowEvent++;
     }
 
+    public IEnumerator Starting3()
+    {
+        nowMethod = true;
+        yield return StartCoroutine(text1_3_2.ThisObjectFadeIn()); //ここはテキストをフェードインさせる
+        nowMethod = false;
+
+        nowMethod = true;
+        Debug.Log("画像を揺らします");
+        yield return StartCoroutine(image_Event1_3.ImageShake()); //画像を揺らす
+        nowMethod = false;
+        nowEvent++;
+    }
+
     public IEnumerator Ending()
     {
         nowMethod = true;
-        yield return StartCoroutine(text1_3_2.ThisObjectFadeIn());
-        image_Event1_3.ThisObjectFadeIn();
+        yield return StartCoroutine(image_Event1_3.ThisObjectFadeIn()); //
         nowMethod = false;
+
+        yield return null;
 
         Debug.Log("イベント1_3のエンディングログ");
         isEnd = true;
     }
+
+
 }

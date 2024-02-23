@@ -56,7 +56,7 @@ public class Event1_2Manager : MonoBehaviour
     public IEnumerator Ending()
     {
         nowMethod = true;
-        image_Event1_2.ThisObjectFadeIn();
+        StartCoroutine(image_Event1_2.ThisObjectFadeIn());
         yield return StartCoroutine(text1_2_1.ThisObjectFadeIn());
         nowMethod = false;
 

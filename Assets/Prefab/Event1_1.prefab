@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4744007052733652775}
   - component: {fileID: 5284379578603634567}
   - component: {fileID: 7607232873686806988}
-  - component: {fileID: 138699257443813056}
   m_Layer: 0
   m_Name: image1_BackGround
   m_TagString: Untagged
@@ -129,19 +128,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &138699257443813056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1314042725141941478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a4ed301cf0948e6bd9973c7a0b7900, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeIn: {fileID: 0}
 --- !u!1 &1867365255163718894
 GameObject:
   m_ObjectHideFlags: 0
