@@ -7,11 +7,15 @@ public class Event1_1Manager : MonoBehaviour
     [SerializeField] Text1_1_1 text1_1_1;
     [SerializeField] Image_Event1 image_Event1;
 
+    public int nowEvent = 1; //現在のイベント
+    public bool nowMethod = false; //現在他クラスのコルーチンが実行中であるかどうか
+    public bool isEnd = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Starting1()); //debug
-    }
+       nowEvent = 1; //現在のイベント
+}
 
     // Update is called once per frame
     void Update()
@@ -21,22 +25,26 @@ public class Event1_1Manager : MonoBehaviour
 
     public IEnumerator Starting1()
     {
+        nowMethod = true;
         yield return StartCoroutine(text1_1_1.Starting()); //このメソッドで文字を出力できるまで止める
-
-        Debug.Log("次の文字列が再生されます");
-        StartCoroutine(Starting2()); //debug
+        nowMethod = false;
+        nowEvent++;
     }
 
     public IEnumerator Starting2()
     {
-        yield return StartCoroutine(text1_1_1.Starting2()); //このメソッドで文字を出力できるまで止める
-
-        StartCoroutine(Ending()); //debug
+        nowMethod = true;
+        yield return StartCoroutine(text1_1_1.Starting2()); //このメソッドで次の文字列を出力できるまで止める
+        nowMethod = false;
+        nowEvent++;
     }
 
     public IEnumerator Ending()
     {
-        yield return StartCoroutine(text1_1_1.ThisObjectFadeIn());
         image_Event1.ThisObjectFadeIn();
+        yield return StartCoroutine(text1_1_1.ThisObjectFadeIn());
+
+        Debug.Log("イベント1_1のエンディングログ");
+        isEnd = true;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Text1_3_1 : MonoBehaviour
 {
+    [SerializeField] Appeartext appeartext;
+    [SerializeField] FadeIn fadeIn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,15 @@ public class Text1_3_1 : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public IEnumerator Starting()
+    {
+        yield return StartCoroutine(appeartext.AppearCenterText()); //このメソッドを文字を出力できるまで止める
+    }
+
+    public IEnumerator ThisObjectFadeIn()
+    {
+        yield return StartCoroutine(fadeIn.Fade()); //フェードインを実行
     }
 }

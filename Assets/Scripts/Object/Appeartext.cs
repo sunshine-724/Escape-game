@@ -83,7 +83,6 @@ public class Appeartext : MonoBehaviour
         Debug.Log("テキストの出力を開始します"+str2Number);
         for (int j = 0; j < str2Number; j++)
         {
-            Debug.Log("カウンタ変数は" + j + "です");
             outputStr = str2.Substring(0, j);
             textComponent.text = outputStr;
             // Nullチェック
