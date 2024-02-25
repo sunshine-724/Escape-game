@@ -13,13 +13,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Player player;
 
+    [SerializeField] CanvasEvent0 canvasEvent0;
     [SerializeField] GameObject CanvasEvent1;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(event1_1Manager.Starting1()); //デバッグ
+        
     }
 
     // Update is called once per frame
@@ -31,6 +32,21 @@ public class GameManager : MonoBehaviour
             Debug.Log(!event1_1Manager.nowMethod);
             Debug.Log(event1_1Manager.nowEvent);
 
+            /*イベント0関連*/
+            if ((!canvasEvent0.isEnd) && (!canvasEvent0.nowMethod))
+            {
+                switch (canvasEvent0.nowEvent)
+                {
+                    case 2:
+                        StartCoroutine(canvasEvent0.Ending());
+                        break;
+                    default:
+                        Debug.Log("エラー");
+                        break;
+                }
+            }
+
+            /*イベント1関連*/
             if ((!event1_1Manager.isEnd) && (!event1_1Manager.nowMethod))
             {
                 switch (event1_1Manager.nowEvent)
@@ -105,8 +121,15 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        //もし各イベント0が終了してかつコルーチンが実行されていなかったら
+        if ((canvasEvent0.isEnd) && (!canvasEvent0.nowMethod))
+        {
+            Debug.Log("次のイベントに移ります");
+            StartCoroutine(event1_1Manager.Starting1());
+            canvasEvent0.nowMethod = true; //このイベントのメソッドをこれ以上実行されないようにする
+        }
 
-        //もし各イベントが終了してかつコルーチンが実行されていなかったら
+        //もし各イベント1が終了してかつコルーチンが実行されていなかったら
         if ((event1_1Manager.isEnd) && (!event1_1Manager.nowMethod))
         {
             Debug.Log("次のイベントに移ります");

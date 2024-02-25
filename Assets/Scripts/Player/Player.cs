@@ -36,17 +36,20 @@ public class Player : MonoBehaviour
     [SerializeField] TeleportObject teleObject2;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         pos = new Vector3(0.0f, 0.0f, 0.0f); //変数を初期化
-
-        runObject.SetActive(false); //走るのを非アクティブ化
-        jumpObject.SetActive(false); //ジャンプを非アクティブ化
-        idleObject.SetActive(true); //待機をアクティブ化
         isJumping = false; //初期状態はfalse
 
         isZKey = false; //初期状態はfalse
         touchTeleportObject = -1; //最初はどことも接していないので-1
+    }
+
+    private void Start()
+    {
+        runObject.SetActive(false); //走るのを非アクティブ化
+        jumpObject.SetActive(false); //ジャンプを非アクティブ化
+        idleObject.SetActive(true); //待機をアクティブ化
     }
 
     // Update is called once per frame
