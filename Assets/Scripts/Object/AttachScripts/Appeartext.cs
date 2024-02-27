@@ -71,8 +71,9 @@ public class Appeartext : MonoBehaviour
             }
             else
             {
-                sound.Typing();
+                yield return StartCoroutine(sound.Start_Text());
             }
+            
             yield return new WaitForSeconds(textSpeed); //指定した秒数だけ遅れる
         }
         Debug.Log("テキストの出力が完了しました");
@@ -92,7 +93,7 @@ public class Appeartext : MonoBehaviour
             }
             else
             {
-                sound.Typing();
+                yield return StartCoroutine(sound.Start_SE()); 
             }
             yield return new WaitForSeconds(textSpeed2); //指定した秒数だけ遅れる
         }

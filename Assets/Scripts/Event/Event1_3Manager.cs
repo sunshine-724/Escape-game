@@ -8,6 +8,9 @@ public class Event1_3Manager : MonoBehaviour
     [SerializeField] Text1_3_2 text1_3_2;
 
     [SerializeField] Image_Event1 image_Event1_3_1;
+    [SerializeField] Image_Event1 image_Event1_3_2;
+
+    [SerializeField] SoundBoxScript soundBox;
 
     public int nowEvent = 0; //現在のイベント
     public bool nowMethod = false;
@@ -50,20 +53,20 @@ public class Event1_3Manager : MonoBehaviour
         nowMethod = false;
 
         nowMethod = true;
-        Debug.Log("画像を揺らします");
+        //画像を揺らし、赤の画像をチカチカさせ、SEを入れる
+        soundBox.gameObject.SetActive(true); //音を鳴らす
+        StartCoroutine(image_Event1_3_2.ImageFadeInOut()); //チカチカ実行
         yield return StartCoroutine(image_Event1_3_1.ImageShake()); //画像を揺らす
+        StartCoroutine(image_Event1_3_2.ImageFadeInOut()); //チカチカを止める
+        soundBox.gameObject.SetActive(false); //音を止める
         nowMethod = false;
-
-        nowMethod = true;
-        Debug.Log("警報の画像を差し込みます");
-
         nowEvent++;
     }
 
     public IEnumerator Ending()
     {
         nowMethod = true;
-        yield return StartCoroutine(image_Event1_3_1.ThisObjectFadeIn()); //
+        yield return StartCoroutine(image_Event1_3_1.ThisObjectFadeIn()); //画像をフェードインさせる
         nowMethod = false;
 
         yield return null;
@@ -71,6 +74,4 @@ public class Event1_3Manager : MonoBehaviour
         Debug.Log("イベント1_3のエンディングログ");
         isEnd = true;
     }
-
-
 }

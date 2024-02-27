@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/*Image_Prisonオブジェクトにアタッチ*/
+/*Imageオブジェクトにアタッチ*/
 public class Image_Event1 : MonoBehaviour
 {
     [SerializeField] FadeIn fadeIn;
     [SerializeField] FadeOut fadeOut;
+
+    [SerializeField] int number; //フェードイン、アウトを繰り返す回数
+    Image image; //imageコンポーネント
+
     private Vector3 imagePos; //この画像の相対座標
     private const float DefaultPictureHeight = 547;
     private float shakeWide; //振れ幅（片方)
@@ -18,6 +22,7 @@ public class Image_Event1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        image = this.GetComponent<Image>(); //このオブジェクトのイメージコンポーネントを取得する
         ThisObjectTransform = this.GetComponent<RectTransform>();
         shakeWide = Mathf.Abs((ThisObjectTransform.sizeDelta.y - DefaultPictureHeight)/2); //振れ幅取得
     }
@@ -81,9 +86,31 @@ public class Image_Event1 : MonoBehaviour
         }
     }
 
-    //警報の画像の時赤色の画像をフェードインとアウトを繰り返す
+    /*警報の画像の時赤色の画像の透明度を調整してチカチカを表現する(引数:繰り返す回数)*/
     public IEnumerator ImageFadeInOut()
     {
-        yield return new WaitForSeconds(1.0f);
+        for(int k = 0; k <= number; k++)
+        {
+            yield return StartCoroutine(fadeIn.Fade());
+            yield return StartCoroutine(ImageAppear());
+
+            yield return new WaitForSeconds(1.0f); //秒数は適宜調整
+        }
+    }
+
+    private IEnumerator ImageAppear()
+    {
+        float alpha;
+        float alphaMax = 50 / 255;
+        float fadeSpeed = 1.0f;
+        for (alpha = alphaMax; alpha >= 0; alpha -= 0.01f)
+        {
+            //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
+            if (image != null)
+            {
+                image.color = new Color(1,0,0,alpha);
+            }
+            yield return fadeSpeed;
+        }
     }
 }

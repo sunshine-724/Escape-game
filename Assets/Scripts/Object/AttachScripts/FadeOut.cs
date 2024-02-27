@@ -49,7 +49,7 @@ public class FadeOut : MonoBehaviour
 
         for (alpha = alphaMax; alpha >= 0; alpha -= 0.01f)
         {
-            //もし指定したコンポーネントがnullではなかったらフェードインさせる
+            //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
             if(image != null)
             {
                 image.color = new Color(alpha, alpha, alpha, 1);
