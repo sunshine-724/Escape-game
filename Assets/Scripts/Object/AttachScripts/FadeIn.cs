@@ -8,8 +8,9 @@ public class FadeIn : MonoBehaviour
 {
     /*変数宣言*/
     float alpha; //出力する透明度
-    const float alphaMax = 1.0f; //透明度の最高値
+    float alphaMax = 1.0f; //透明度の最高値
     [SerializeField] float fadeSpeed; //インスペクタでスピードを指定
+    [SerializeField] float specifyAlphaMax; //必要ならalphaMaxの値を指定する（指定しなかったら最大値が適応される)
 
     Image image; //imageコンポーネント
     Text text; //テキストコンポーネント
@@ -38,6 +39,12 @@ public class FadeIn : MonoBehaviour
 
     public IEnumerator Fade()
     {
+        //もし値が指定されていたら値を書き換える
+        if(specifyAlphaMax != 0)
+        {
+            alphaMax = specifyAlphaMax;
+        }
+
         for (alpha = alphaMax; alpha >= 0; alpha -= 0.01f)
         {
             //もし指定したコンポーネントがnullではなかったらフェードインさせる

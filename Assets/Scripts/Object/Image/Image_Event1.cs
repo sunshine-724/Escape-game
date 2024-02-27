@@ -18,9 +18,7 @@ public class Image_Event1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("nullチェック");
         ThisObjectTransform = this.GetComponent<RectTransform>();
-        Debug.Log(ThisObjectTransform.sizeDelta.y);
         shakeWide = Mathf.Abs((ThisObjectTransform.sizeDelta.y - DefaultPictureHeight)/2); //振れ幅取得
     }
 
@@ -81,5 +79,11 @@ public class Image_Event1 : MonoBehaviour
 
             yield return new WaitForSeconds(1/10000000000000000f); //秒数は適宜調整
         }
+    }
+
+    //警報の画像の時赤色の画像をフェードインとアウトを繰り返す
+    public IEnumerator ImageFadeInOut()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 }

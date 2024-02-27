@@ -19,10 +19,10 @@ public class GameStart : MonoBehaviour
 
     }
 
-    //ボタンがクリックされたらGameSceneに移動する
+    //ボタンがクリックされたらGameScene1に移動する
     public void ClickStart()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("GameScene1");
     }
 
     //ゲーム終了:ボタンから呼び出す

@@ -16,7 +16,6 @@ public class CanvasEvent0 : MonoBehaviour
     {
         nowEvent = 1;
         isEnd = false;
-        //StartCoroutine(Starting1()); //デバッグ
     }
 
     // Update is called once per frame

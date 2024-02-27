@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Classic Legacy Pack - Village/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: 6fe82c1e2c14545f993e49e82b06d0aa
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/GameScene1.unity
     guid: df925852e7a88494cabeba1ddae4f80d
+  - enabled: 1
+    path: Assets/Scenes/GameScene2.unity
+    guid: 4d896fbe0b0cb4b5fb5889f31070d125
   m_configObjects: {}

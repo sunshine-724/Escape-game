@@ -7,7 +7,7 @@ public class Event1_3Manager : MonoBehaviour
     [SerializeField] Text1_3_1 text1_3_1;
     [SerializeField] Text1_3_2 text1_3_2;
 
-    [SerializeField] Image_Event1 image_Event1_3;
+    [SerializeField] Image_Event1 image_Event1_3_1;
 
     public int nowEvent = 0; //現在のイベント
     public bool nowMethod = false;
@@ -51,15 +51,19 @@ public class Event1_3Manager : MonoBehaviour
 
         nowMethod = true;
         Debug.Log("画像を揺らします");
-        yield return StartCoroutine(image_Event1_3.ImageShake()); //画像を揺らす
+        yield return StartCoroutine(image_Event1_3_1.ImageShake()); //画像を揺らす
         nowMethod = false;
+
+        nowMethod = true;
+        Debug.Log("警報の画像を差し込みます");
+
         nowEvent++;
     }
 
     public IEnumerator Ending()
     {
         nowMethod = true;
-        yield return StartCoroutine(image_Event1_3.ThisObjectFadeIn()); //
+        yield return StartCoroutine(image_Event1_3_1.ThisObjectFadeIn()); //
         nowMethod = false;
 
         yield return null;

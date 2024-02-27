@@ -7,14 +7,23 @@ using static Unity.Collections.Unicode;
 public class Player : MonoBehaviour
 {
     /*変数宣言*/
-    private bool isJumping; //ジャンプしても良いか
-    private bool isTeleport; //(仮)
-    private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
+    //キャラのパラメータ関連
+    [SerializeField] float speed; //キャラの移動スピード
+    public Vector2 jumpForce = new Vector2(0.0f, 15.0f); //ジャンプの強さ
     [System.NonSerialized] public Vector3 pos; //Playerの現在座標(読み取り専用）
-    private int touchTeleportObject; //何番目のテレポートオブジェクトと接しているか(していない場合-1を格納)
 
+    //フラグ関連
     private bool isZKey; //Zキーを押したらイベントを発生さしても良いか
     public bool isMove; //プレイヤーが動いても良いか
+    private bool isJumping; //ジャンプしても良いか
+    public bool isRightMove; //イベント1において右方向へ移動はできないようにする
+    private bool isTeleport; //(仮)
+
+    //その他
+    private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
+    private int touchTeleportObject; //何番目のテレポートオブジェクトと接しているか(していない場合-1を格納)
+
+    Rigidbody2D rb; //このオブジェクトのコンポーネント
 
     /*オブジェクトを取得する*/
     /*子オブジェクト*/
@@ -23,7 +32,6 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject jumpObject; //キャラがジャンプする
 
     /*子クラスを取得する*/
-    [SerializeField] CharacterMove characterMove;
     [SerializeField] MainCameraManager mainCamera;
 
     /*他クラスを取得する*/
@@ -40,9 +48,10 @@ public class Player : MonoBehaviour
     {
         pos = new Vector3(0.0f, 0.0f, 0.0f); //変数を初期化
         isJumping = false; //初期状態はfalse
-
         isZKey = false; //初期状態はfalse
         touchTeleportObject = -1; //最初はどことも接していないので-1
+
+        rb = this.gameObject.GetComponent<Rigidbody2D>(); //コンポーネントを取得する
     }
 
     private void Start()
@@ -95,7 +104,7 @@ public class Player : MonoBehaviour
             jumpObject.SetActive(false);
             runObject.SetActive(true);
             mainCamera.CameraBaseRotation(); //カメラを元の向きに戻す
-            characterMove.Right(this); //右側に移動する      
+            Right(); //右側に移動する      
         }
         else if (Input.GetKey(KeyCode.A) || (Input.GetKey(KeyCode.LeftArrow)))
         {
@@ -103,7 +112,7 @@ public class Player : MonoBehaviour
             jumpObject.SetActive(false);
             runObject.SetActive(true);
             mainCamera.CameraReverseRotation(); //親オブジェクトを反転させたのでカメラを反転させる
-            characterMove.Left(this); //左側に移動する
+            Left(); //左側に移動する
         }
         else
         {
@@ -119,7 +128,7 @@ public class Player : MonoBehaviour
             idleObject.SetActive(false);
             runObject.SetActive(false);
             jumpObject.SetActive(true);
-            characterMove.Jump(this); //ジャンプする
+            Jump(); //ジャンプする
 
             isJumping = false; //連続でジャンプできないようにする
         }
@@ -207,4 +216,27 @@ public class Player : MonoBehaviour
             Debug.Log("落下したのでゲームオーバー画面を表示します");
         }
     }
+
+
+    /*指定されたキーによってキャラを動かす*/
+    public void Right()
+    {
+        this.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); //元の向き（右側に戻す)
+        this.pos.x += speed;
+        this.transform.position = this.pos; //座標を更新
+
+    }
+    public void Left()
+    {
+        this.transform.localRotation = Quaternion.Euler(0.0f, 180f, 0.0f); //親オブジェクトであるPlayerを反転させる
+        this.pos.x -= speed;
+        this.transform.position = this.pos; //座標を更新
+    }
+
+    public void Jump()
+    {
+        this.rb.AddForce(jumpForce, ForceMode2D.Impulse); //垂直方法へと力を加える
+    }
+
+
 }
