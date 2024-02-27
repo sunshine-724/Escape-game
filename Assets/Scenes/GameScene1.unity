@@ -309,7 +309,6 @@ GameObject:
   - component: {fileID: 238537909}
   - component: {fileID: 238537914}
   - component: {fileID: 238537913}
-  - component: {fileID: 238537912}
   - component: {fileID: 238537910}
   m_Layer: 5
   m_Name: Image1_3_2Warning
@@ -349,23 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a4ed301cf0948e6bd9973c7a0b7900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeIn: {fileID: 238537912}
+  fadeIn: {fileID: 0}
   fadeOut: {fileID: 0}
-  number: 0
---- !u!114 &238537912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238537908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeSpeed: 1
-  specifyAlphaMax: 0
+  number: 10
 --- !u!114 &238537913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,7 +1034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &857553126
 MonoBehaviour:
@@ -1127,7 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &889179837
 MonoBehaviour:
@@ -1472,7 +1457,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6fe6859c1959b4d719b8babe2c853912, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2008,7 +1993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &1158933753
 MonoBehaviour:
@@ -2557,7 +2542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dfeceab7b264ef981f986983e2089d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!1 &1623028698 stripped
 GameObject:
@@ -3129,7 +3114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!1 &1884840389 stripped
 GameObject:
@@ -3400,7 +3385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!1 &1993289610
 GameObject:
@@ -3774,7 +3759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &2018678862 stripped
 MonoBehaviour:
@@ -3814,7 +3799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!1001 &2044633073
 PrefabInstance:
@@ -4032,7 +4017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &2044633080
 MonoBehaviour:
@@ -4046,7 +4031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &2044633081 stripped
 MonoBehaviour:
@@ -4179,7 +4164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dfeceab7b264ef981f986983e2089d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.005
   specifyAlphaMax: 0
 --- !u!114 &2092178983
 MonoBehaviour:
@@ -4600,7 +4585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.1
+  fadeSpeed: 0.05
   specifyAlphaMax: 0
 --- !u!1001 &6708684382995743285
 PrefabInstance:

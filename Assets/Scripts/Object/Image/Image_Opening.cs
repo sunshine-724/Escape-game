@@ -23,5 +23,6 @@ public class Image_Opening : MonoBehaviour
     public IEnumerator ThisObjectFadeIn()
     {
         yield return  StartCoroutine(fadeIn.Fade()); //フェードインを実行
+        Debug.Log("実行終了");
     }
 }

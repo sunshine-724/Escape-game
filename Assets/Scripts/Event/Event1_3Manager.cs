@@ -55,9 +55,9 @@ public class Event1_3Manager : MonoBehaviour
         nowMethod = true;
         //画像を揺らし、赤の画像をチカチカさせ、SEを入れる
         soundBox.gameObject.SetActive(true); //音を鳴らす
-        StartCoroutine(image_Event1_3_2.ImageFadeInOut()); //チカチカ実行
+        image_Event1_3_2.ImageFadeInOut(); //チカチカ実行
         yield return StartCoroutine(image_Event1_3_1.ImageShake()); //画像を揺らす
-        StartCoroutine(image_Event1_3_2.ImageFadeInOut()); //チカチカを止める
+        image_Event1_3_2.EndImageFadeInOut(); //チカチカを止める
         soundBox.gameObject.SetActive(false); //音を止める
         nowMethod = false;
         nowEvent++;

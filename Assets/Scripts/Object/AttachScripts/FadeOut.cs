@@ -12,6 +12,8 @@ public class FadeOut : MonoBehaviour
     [SerializeField] float fadeSpeed; //インスペクタでスピードを指定
     [SerializeField] float specifyAlphaMax; //必要ならalphaMaxの値を指定する（指定しなかったら最大値が適応される)
 
+    bool isActive; //フェードアウトを実行しても良いか
+
 
     Image image; //imageコンポーネント
     Text text; //テキストコンポーネント
@@ -27,40 +29,50 @@ public class FadeOut : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //もし値が指定されていたら値を書き換える
+        if (specifyAlphaMax != 0)
+        {
+            alphaMax = specifyAlphaMax;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isActive)
+        {
+            //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
+            if (image != null)
+            {
+                image.color = new Color(alpha, alpha, alpha, 1);
+            }
 
+            if (text != null)
+            {
+                text.color = new Color(alpha, alpha, alpha, 1);
+            }
+
+            alpha += 0.01f;
+
+            if(alpha >= 1.1f)
+            {
+                Debug.Log("フェードアウトを終了しました");
+                isActive = false;
+            }
+        }
     }
 
 
 
     public IEnumerator Fade()
     {
+        isActive = true;
 
-        //もし値が指定されていたら値を書き換える
-        if (specifyAlphaMax != 0)
+        while (isActive)
         {
-            alphaMax = specifyAlphaMax;
+            yield return null;
         }
 
-        for (alpha = alphaMax; alpha >= 0; alpha -= 0.01f)
-        {
-            //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
-            if(image != null)
-            {
-                image.color = new Color(alpha, alpha, alpha, 1);
-            }
-
-            if(text != null)
-            {
-                text.color = new Color(alpha,alpha, alpha, 1);
-            }
-            
-            yield return fadeSpeed;
-        }
+        yield return fadeSpeed;
     }
 }

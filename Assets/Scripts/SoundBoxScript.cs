@@ -8,11 +8,13 @@ public class SoundBoxScript : MonoBehaviour
     [SerializeField] Se sound; //音楽を指定するクラス
     [SerializeField] int repeatNumber; //リピートする回数を指定させる（指定がない場合、鳴らすのは1回）
 
+    private void Awake()
+    {
+        this.gameObject.SetActive(false);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.SetActive(false);
-
         //指定されていない場合
         if(repeatNumber == 0)
         {
@@ -44,7 +46,7 @@ public class SoundBoxScript : MonoBehaviour
         for (int k = 0; k <= repeatNumber; k++)
         {
             yield return StartCoroutine(sound.Start_SE());
-            Debug.Log(k+"回鳴らしました");
+            Debug.Log(k+1 +"回鳴らしました");
         }
     }
     

@@ -18,6 +18,11 @@ public class Image_Event1 : MonoBehaviour
     private int shakePattern; //0:上 1:真ん中 2:下 3:真ん中 0:上の状態にある
     private RectTransform ThisObjectTransform; //transformコンポーネント
 
+    private bool isAppear;
+    private bool isDisappear;
+    private float alpha;
+    float fadeSpeed = 1.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +30,10 @@ public class Image_Event1 : MonoBehaviour
         image = this.GetComponent<Image>(); //このオブジェクトのイメージコンポーネントを取得する
         ThisObjectTransform = this.GetComponent<RectTransform>();
         shakeWide = Mathf.Abs((ThisObjectTransform.sizeDelta.y - DefaultPictureHeight)/2); //振れ幅取得
+
+        isAppear = false;
+        isDisappear = false;
+        alpha = 0.0f; //初期値は0
     }
 
     // Update is called once per frame
@@ -33,6 +42,37 @@ public class Image_Event1 : MonoBehaviour
         if(ThisObjectTransform != null)
         {
             imagePos = ThisObjectTransform.anchoredPosition; //相対座標を取得する
+        }
+
+        if (isAppear)
+        {
+            if (image != null)
+            {
+                image.color = new Color(1, 0, 0, alpha);
+                alpha += 0.001f;
+                if (alpha > 50/250f)
+                {
+                    isAppear = false;
+                    isDisappear = true;
+                    Debug.Log("Appear終了");
+                }
+            }
+        }
+
+        if (isDisappear)
+        {
+            if (image != null)
+            {
+                image.color = new Color(1, 0, 0, alpha);
+                alpha -= 0.001f;
+
+                if(alpha <0.0f)
+                {
+                    isDisappear = false;
+                    isAppear = true;
+                    Debug.Log("Disppear終了");
+                }
+            }
         }
       
     }
@@ -55,7 +95,7 @@ public class Image_Event1 : MonoBehaviour
         imagePos.y += shakeWide;
 
         //とりあえず50回ゆらす
-        for(int k = 0; k <370; k++)
+        for(int k = 0; k <1500; k++)
         {
             switch (shakePattern)
             {
@@ -86,31 +126,16 @@ public class Image_Event1 : MonoBehaviour
         }
     }
 
-    /*警報の画像の時赤色の画像の透明度を調整してチカチカを表現する(引数:繰り返す回数)*/
-    public IEnumerator ImageFadeInOut()
+    /*警報の画像の時赤色の画像の透明度を調整してチカチカを表現する*/
+    public void ImageFadeInOut()
     {
-        for(int k = 0; k <= number; k++)
-        {
-            yield return StartCoroutine(fadeIn.Fade());
-            yield return StartCoroutine(ImageAppear());
-
-            yield return new WaitForSeconds(1.0f); //秒数は適宜調整
-        }
+        isAppear = true;
     }
 
-    private IEnumerator ImageAppear()
+    public void EndImageFadeInOut()
     {
-        float alpha;
-        float alphaMax = 50 / 255;
-        float fadeSpeed = 1.0f;
-        for (alpha = alphaMax; alpha >= 0; alpha -= 0.01f)
-        {
-            //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
-            if (image != null)
-            {
-                image.color = new Color(1,0,0,alpha);
-            }
-            yield return fadeSpeed;
-        }
+        image.color = new Color(1, 0, 0, 0); //もう使わないので戻しておく
+        isAppear = false;
+        isDisappear = false;
     }
 }
