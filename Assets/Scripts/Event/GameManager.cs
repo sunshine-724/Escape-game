@@ -26,6 +26,25 @@ public class GameManager : MonoBehaviour
     private const float ChangeScenePlayerXPositon = -50; //プレイヤーがこのX座標より左に行ったらシーンを切り替える
 
 
+    private void Awake()
+    {
+        //どのゲームマネージャーかで実行する内容を変える
+        switch (EventNumber)
+        {
+            case 1:
+                player.isRightMove = false; //イベント1では右方向へと変化できないようにする
+                Debug.Log("falseにしました"); //デバッグ
+                break;
+
+            case 3:
+                break;
+
+            default:
+                Debug.Log("そのようなイベントは存在しません");
+                break;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

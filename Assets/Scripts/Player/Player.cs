@@ -16,8 +16,11 @@ public class Player : MonoBehaviour
     private bool isZKey; //Zキーを押したらイベントを発生さしても良いか
     public bool isMove; //プレイヤーが動いても良いか
     private bool isJumping; //ジャンプしても良いか
-    public bool isRightMove; //イベント1において右方向へ移動はできないようにする
+    public bool isRightMove = true; //イベント1において右方向へ移動はできないようにする(GameManagerのみ書き換え可能)
     private bool isTeleport; //(仮)
+
+    //SE関連
+    private bool isRunStepSound; //ステップサウンドが連続して再生されないようにする
 
     //その他
     private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
@@ -35,8 +38,13 @@ public class Player : MonoBehaviour
     [SerializeField] MainCameraManager mainCamera;
 
     /*他クラスを取得する*/
+    //外部オブジェクト関連
     [SerializeField] Planes planes;
     [SerializeField] TeleportObjects teleObjects;
+
+    //SE関連
+    [SerializeField] Se jumpSound;
+    [SerializeField] Se stepSound;
 
     /*クラスは同じだがインスタンスが異なる(テレポート元)*/
     [SerializeField] TeleportObject teleObject0;
@@ -49,6 +57,7 @@ public class Player : MonoBehaviour
         pos = new Vector3(0.0f, 0.0f, 0.0f); //変数を初期化
         isJumping = false; //初期状態はfalse
         isZKey = false; //初期状態はfalse
+        isRunStepSound = true; //初期状態はtrue
         touchTeleportObject = -1; //最初はどことも接していないので-1
 
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //コンポーネントを取得する
@@ -98,38 +107,72 @@ public class Player : MonoBehaviour
 
         /*キーを取得する*/
         //水平キーを取得する
-        if (Input.GetKey(KeyCode.D) || (Input.GetKey(KeyCode.RightArrow)))
+        if ((Input.GetKey(KeyCode.D) || (Input.GetKey(KeyCode.RightArrow))) && (isRightMove))
         {
-            idleObject.SetActive(false);
-            jumpObject.SetActive(false);
-            runObject.SetActive(true);
+            if (isJumping)
+            {
+                idleObject.SetActive(false);
+                jumpObject.SetActive(false);
+                runObject.SetActive(true);
+                if (isRunStepSound)
+                {
+                    StartCoroutine(RunStepSound());
+                }
+            }
+            else
+            {
+                //ジャンプをしている最中は待機モーションにならない
+            }
             mainCamera.CameraBaseRotation(); //カメラを元の向きに戻す
-            Right(); //右側に移動する      
+            Right(); //右側に移動する
         }
         else if (Input.GetKey(KeyCode.A) || (Input.GetKey(KeyCode.LeftArrow)))
         {
-            idleObject.SetActive(false);
-            jumpObject.SetActive(false);
-            runObject.SetActive(true);
+            if (isJumping)
+            {
+                idleObject.SetActive(false);
+                jumpObject.SetActive(false);
+                runObject.SetActive(true);
+                if (isRunStepSound)
+                {    
+                    StartCoroutine(RunStepSound());
+                }
+            }
+            else
+            {
+                //ジャンプをしている最中は待機モーションにならない
+            }
             mainCamera.CameraReverseRotation(); //親オブジェクトを反転させたのでカメラを反転させる
             Left(); //左側に移動する
         }
         else
         {
             //待機モーション
-            runObject.SetActive(false);
-            jumpObject.SetActive(false);
-            idleObject.SetActive(true);
-        }
+            if (isJumping)
+            {
+                runObject.SetActive(false);
+                jumpObject.SetActive(false);
+                idleObject.SetActive(true);
+            }
+            else
+            {
+                //ジャンプをしている最中は待機モーションにならない
+            }
 
+            if (!isRunStepSound)
+            {
+                StopCoroutine(RunStepSound()); //もし待機モーション時であればRun用のSEを止める
+            }
+
+        }
         //垂直キーを取得する
         if (((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))) && (isJumping))
         {
             idleObject.SetActive(false);
             runObject.SetActive(false);
             jumpObject.SetActive(true);
+            StartCoroutine(jumpSound.Start_SE());
             Jump(); //ジャンプする
-
             isJumping = false; //連続でジャンプできないようにする
         }
 
@@ -153,7 +196,6 @@ public class Player : MonoBehaviour
                     break;
                 }
             }
-            //Debug.Log("正常にループを抜けました");
         }
         else
         {
@@ -203,7 +245,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //Debug.Log("teleObjects is null");
+           
         }
     }
 
@@ -238,5 +280,11 @@ public class Player : MonoBehaviour
         this.rb.AddForce(jumpForce, ForceMode2D.Impulse); //垂直方法へと力を加える
     }
 
-
+    public IEnumerator RunStepSound()
+    {
+        isRunStepSound = false; //再生し終えるまで再生許可は与えない
+        yield return StartCoroutine(stepSound.Start_SE());
+        yield return new WaitForSeconds(0.3f); //少し補完を入れる
+        isRunStepSound = true; //再生し終えたので再度再生許可を与える
+    }
 }

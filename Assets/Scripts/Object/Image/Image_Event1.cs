@@ -21,8 +21,6 @@ public class Image_Event1 : MonoBehaviour
     private bool isAppear;
     private bool isDisappear;
     private float alpha;
-    float fadeSpeed = 1.0f;
-
 
     // Start is called before the first frame update
     void Start()
