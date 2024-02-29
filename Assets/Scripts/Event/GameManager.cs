@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Event1_3Manager event1_3Manager;
     [SerializeField] Event1_4Manager event1_4Manager;
 
+    [SerializeField] GameObject soundBox_Bgm;
+
+    //イベント2関連
+    [SerializeField] Event2_1Manager event2_1Manager;
 
     [SerializeField] Player player;
 
@@ -21,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject CanvasEvent1;
 
     //変数宣言
-    private bool StopMainCamera; //メインカメラの座標が一定以上に行ったら動かすのを止める
+    private bool nextEvent = false; //次のイベントを開始しても良いか(大きなイベントで）
 
     private const float ChangeScenePlayerXPositon = -50; //プレイヤーがこのX座標より左に行ったらシーンを切り替える
 
@@ -51,7 +55,7 @@ public class GameManager : MonoBehaviour
         //どのゲームマネージャーかで実行する内容を変える
         switch (EventNumber)
         {
-            case 1:
+            case 0:
                 StartCoroutine(canvasEvent0.Starting1());
                 break;
 
@@ -67,30 +71,85 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Zキーが押されたら
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log("Zキーが押されました");
-            Debug.Log(!event1_1Manager.isEnd);
-            Debug.Log(!event1_1Manager.nowMethod);
-            Debug.Log(event1_1Manager.nowEvent);
-
-            /*イベント0関連*/
-            if ((!canvasEvent0.isEnd) && (!canvasEvent0.nowMethod))
+            switch (EventNumber)
             {
-                switch (canvasEvent0.nowEvent)
-                {
-                    case 2:
-                        StartCoroutine(canvasEvent0.Ending());
-                        break;
-                    default:
-                        Debug.Log("エラー");
-                        break;
-                }
+                case 0:
+                    Update_Event0_InputZKey();
+                    break;
+
+                case 1:
+                    Update_Event1_InputZKey();
+                    break;
+
+                default:
+                    break;
             }
-            Update_Event1_InputZKey();
         }
 
-        UpdateEvent1_AllTheTime();
+        switch (EventNumber)
+        {
+            case 0:
+                UpdateEvent0_AllTheTime();
+                break;
+
+            case 1:
+                UpdateEvent1_AllTheTime();
+                break;
+
+            case 2:
+                UpdateEvent2_AllTheTime();
+                break;
+
+            default:
+                break;
+        }
+
+        if (nextEvent)
+        {
+            nextEvent = false; //連続して次のイベントに行かないようにする
+            NextEvent(); //次のイベントに移る
+        }
+    }
+
+    void NextEvent()
+    {
+        EventNumber++;
+
+        switch (EventNumber)
+        {
+            case 1:
+                soundBox_Bgm.SetActive(true); //bgmをオンにする
+                StartCoroutine(event1_1Manager.Starting1());
+                break;
+
+            case 2:
+                break;
+
+            default:
+                Debug.Log("エラー");
+                break;
+        }
+    }
+
+    void Update_Event0_InputZKey()
+    {
+        /*イベント0関連*/
+        if ((!canvasEvent0.isEnd) && (!canvasEvent0.nowMethod))
+        {
+            switch (canvasEvent0.nowEvent)
+            {
+                case 2:
+                    StartCoroutine(canvasEvent0.Ending());
+                    break;
+
+                default:
+                    Debug.Log("エラー");
+                    break;
+            }
+        }
     }
 
     void Update_Event1_InputZKey()
@@ -105,6 +164,10 @@ public class GameManager : MonoBehaviour
                     break;
 
                 case 3:
+                    StartCoroutine(event1_1Manager.Starting3());
+                    break;
+
+                case 4:
                     StartCoroutine(event1_1Manager.Ending());
                     break;
 
@@ -170,20 +233,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    void UpdateEvent1_AllTheTime()
+
+    void UpdateEvent0_AllTheTime()
     {
         //もし各イベント0が終了してかつコルーチンが実行されていなかったら
         if ((canvasEvent0.isEnd) && (!canvasEvent0.nowMethod))
         {
-            Debug.Log("次のイベントに移ります");
-            StartCoroutine(event1_1Manager.Starting1());
             canvasEvent0.nowMethod = true; //このイベントのメソッドをこれ以上実行されないようにする
+            Debug.Log("次のイベントに移ります");
+            nextEvent = true;
         }
+    }
 
+    void UpdateEvent1_AllTheTime()
+    {
         //もし各イベント1が終了してかつコルーチンが実行されていなかったら
         if ((event1_1Manager.isEnd) && (!event1_1Manager.nowMethod))
         {
-            Debug.Log("次のイベントに移ります");
             StartCoroutine(event1_2Manager.Starting1());
             event1_1Manager.nowMethod = true; //このイベントのメソッドをこれ以上実行されないようにする
         }
@@ -202,15 +268,18 @@ public class GameManager : MonoBehaviour
             event1_4Manager.nowMethod = true;
             CanvasEvent1.SetActive(false); //関連するもの全てfalse
 
-            player.isMove = true;
+            player.isMove = true; //プレイヤーが動くのを許可する
             Debug.Log("イベント1終了");
+            nextEvent = true; //次のイベントにいける許可を与える
         }
+    }
 
-        //もしプレイヤーが指定した座標を超えたらシーンを入れ替える
-        if (player.pos.x <= ChangeScenePlayerXPositon)
+    void UpdateEvent2_AllTheTime()
+    {
+        if((player.pos.x <= ChangeScenePlayerXPositon) && (!event2_1Manager.nowMethod))
         {
-            Debug.Log(player.pos.x);
-            SceneManager.LoadScene("GameScene2"); //次のゲームシーンを読み込む
+            Debug.Log("条件を満たしました");
+            StartCoroutine(event2_1Manager.Starting1());
         }
     }
 }

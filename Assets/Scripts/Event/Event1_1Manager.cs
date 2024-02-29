@@ -5,7 +5,8 @@ using UnityEngine;
 public class Event1_1Manager : MonoBehaviour
 {
     [SerializeField] Text1_1_1 text1_1_1;
-    [SerializeField] Image_Event1 image_Event1;
+    [SerializeField] Image_Event1 Image1_1_1OpenEyes;
+    [SerializeField] Image_Event1 image1_1_2Prison;
 
     public int nowEvent = 1; //現在のイベント
     public bool nowMethod = false; //現在他クラスのコルーチンが実行中であるかどうか
@@ -25,24 +26,36 @@ public class Event1_1Manager : MonoBehaviour
 
     public IEnumerator Starting1()
     {
-        nowMethod = true;
-        yield return StartCoroutine(text1_1_1.Starting()); //このメソッドで文字を出力できるまで止める
-        nowMethod = false;
+        //保留
+        //nowMethod = true;
+        //yield return StartCoroutine(Image1_1_1OpenEyes.ThisObjectFadeIn()); //画像を非表示
+        //Debug.Log("画像を表示させました");
+        //nowMethod = false;
+        yield return null; //仮コード
         nowEvent++;
     }
 
     public IEnumerator Starting2()
     {
         nowMethod = true;
-        yield return StartCoroutine(text1_1_1.Starting2()); //このメソッドで次の文字列を出力できるまで止める
+        yield return StartCoroutine(text1_1_1.Starting()); //「あれ・・？ここどこ？」
+        nowMethod = false;
+        nowEvent++;
+    }
+
+    public IEnumerator Starting3()
+    {
+        nowMethod = true;
+        yield return StartCoroutine(text1_1_1.Starting2()); //「私は確か・・・ご飯を探してて、それで・・・。」
         nowMethod = false;
         nowEvent++;
     }
 
     public IEnumerator Ending()
     {
-        StartCoroutine(image_Event1.ThisObjectFadeIn());
+        StartCoroutine(image1_1_2Prison.ThisObjectFadeIn());
 
+        yield return StartCoroutine(Image1_1_1OpenEyes.ThisObjectFadeIn()); //画像を非表示（仮コード)
         yield return StartCoroutine(text1_1_1.ThisObjectFadeIn());
 
         Debug.Log("イベント1_1のエンディングログ");
