@@ -6,7 +6,9 @@ public class Event1_4Manager : MonoBehaviour
 {
     [SerializeField] Text1_4_1 text1_4_1;
 
-    [SerializeField] Image_Event1 image_Event1_4;
+    [SerializeField] Image_Event1 image_Event1_4_1;
+
+    [SerializeField] Image_Event1 image_Event1_4_2;
 
     public int nowEvent; //現在のイベント
     public bool nowMethod = false;
@@ -35,14 +37,8 @@ public class Event1_4Manager : MonoBehaviour
     public IEnumerator Ending()
     {
         nowMethod = true;
-        StartCoroutine(image_Event1_4.ThisObjectFadeOut()); //背景をフェードアウトさせる
-        Debug.Log("テキストをフェードアウトさせる");
-        yield return StartCoroutine(text1_4_1.FadeOut()); //テキストをフェードアウトさせる
+        yield return StartCoroutine(image_Event1_4_2.ThisObjectFadeOut());
         Debug.Log("フェードアウト終了");
-
-
-        yield return new WaitForSeconds(2.0f); //約2秒くらい止める
-        Debug.Log("2秒止めました");
 
         nowMethod = false;
         isEnd = true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/*フェードアウトしたいオブジェクトにアタッチする*/
+/*フェードアウトするようのimageオブジェクトを作りそこにアタッチする*/
 public class FadeOut : MonoBehaviour
 {
     /*変数宣言*/
@@ -23,7 +23,7 @@ public class FadeOut : MonoBehaviour
         image = this.GetComponent<Image>(); //このオブジェクトのイメージコンポーネントを取得する
         text =this.GetComponent<Text>(); //このオブジェクトのテキストコンポーネントを取得する
 
-        alpha = alphaMax; //初期値
+        alpha = 0.5f; //初期値
     }
 
     // Start is called before the first frame update
@@ -44,15 +44,15 @@ public class FadeOut : MonoBehaviour
             //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
             if (image != null)
             {
-                image.color = new Color(alpha, alpha, alpha, 1);
+                image.color = new Color(0, 0, 0, alpha);
             }
 
             if (text != null)
             {
-                text.color = new Color(alpha, alpha, alpha, 1);
+                text.color = new Color(0, 0, 0, alpha);
             }
 
-            alpha += 0.01f;
+            alpha += fadeSpeed;
 
             if(alpha >= 1.1f)
             {

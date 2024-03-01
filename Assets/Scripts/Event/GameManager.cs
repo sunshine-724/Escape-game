@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] Event1_3Manager event1_3Manager;
     [SerializeField] Event1_4Manager event1_4Manager;
 
-    [SerializeField] GameObject soundBox_Bgm;
-
     //イベント2関連
     [SerializeField] Event2_1Manager event2_1Manager;
+
+    //bgm
+    [SerializeField] GameObject soundBox_Bgm;
 
     [SerializeField] Player player;
 
@@ -35,9 +36,8 @@ public class GameManager : MonoBehaviour
         //どのゲームマネージャーかで実行する内容を変える
         switch (EventNumber)
         {
-            case 1:
+            case 0:
                 player.isRightMove = false; //イベント1では右方向へと変化できないようにする
-                Debug.Log("falseにしました"); //デバッグ
                 break;
 
             case 3:
@@ -121,11 +121,11 @@ public class GameManager : MonoBehaviour
         switch (EventNumber)
         {
             case 1:
-                soundBox_Bgm.SetActive(true); //bgmをオンにする
                 StartCoroutine(event1_1Manager.Starting1());
                 break;
 
             case 2:
+                soundBox_Bgm.SetActive(false); //bgmをオフにする
                 break;
 
             default:
@@ -142,6 +142,11 @@ public class GameManager : MonoBehaviour
             switch (canvasEvent0.nowEvent)
             {
                 case 2:
+                    soundBox_Bgm.SetActive(true); //bgmをオンにする
+                    StartCoroutine(canvasEvent0.Starting2());
+                    break;
+
+                case 3:
                     StartCoroutine(canvasEvent0.Ending());
                     break;
 
@@ -164,10 +169,6 @@ public class GameManager : MonoBehaviour
                     break;
 
                 case 3:
-                    StartCoroutine(event1_1Manager.Starting3());
-                    break;
-
-                case 4:
                     StartCoroutine(event1_1Manager.Ending());
                     break;
 
@@ -280,6 +281,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("条件を満たしました");
             StartCoroutine(event2_1Manager.Starting1());
+        }
+
+        if (event2_1Manager.isEnd)
+        {
+            SceneManager.LoadScene("GameScene2"); //次のシーンに移る
         }
     }
 }

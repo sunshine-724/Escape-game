@@ -24,16 +24,13 @@ public class Event2_1Manager : MonoBehaviour
     {
         nowMethod = true;
         Image2_1_1.gameObject.SetActive(true);
-        Debug.Log("真っ暗にします");
 
         //完全に画面が真っ黒になるまで待つ
         while (Image2_1_1.isActive)
         {
             yield return null;
         }
-        Debug.Log("真っ暗になりました");
-        //nowMethod = false;
-
-        //SceneManager.LoadScene("GameScene2"); //次のゲームシーンを読み込む
+        nowMethod = false;
+        isEnd = true;
     }
 }
