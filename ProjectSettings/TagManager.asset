@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Canvas_Background
+    uniqueID: 4003555483
+    locked: 0
   - name: Planes
     uniqueID: 1809982533
     locked: 0
@@ -51,6 +54,9 @@ TagManager:
     locked: 0
   - name: PlayerOrEnemy
     uniqueID: 1908210095
+    locked: 0
+  - name: Canvas_Event3
+    uniqueID: 1082614557
     locked: 0
   - name: Canvas_Event2
     uniqueID: 925253471

@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     //イベント2関連
     [SerializeField] Event2_1Manager event2_1Manager;
 
+    //イベント3関連
+    [SerializeField] Event3_1Manager event3_1Manager;
+
     //bgm
     [SerializeField] GameObject soundBox_Bgm;
 
@@ -28,19 +31,20 @@ public class GameManager : MonoBehaviour
     //変数宣言
     private bool nextEvent = false; //次のイベントを開始しても良いか(大きなイベントで）
 
-    private const float ChangeScenePlayerXPositon = -50; //プレイヤーがこのX座標より左に行ったらシーンを切り替える
+    private const float ChangeScenePlayerXPositon = 40; //プレイヤーがこのX座標より左に行ったらシーンを切り替える
 
 
     private void Awake()
     {
+
         //どのゲームマネージャーかで実行する内容を変える
         switch (EventNumber)
         {
             case 0:
-                player.isRightMove = false; //イベント1では右方向へと変化できないようにする
                 break;
 
             case 3:
+                event3_1Manager.Starting1();
                 break;
 
             default:
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour
         switch (EventNumber)
         {
             case 0:
+                player.isLeftMove = false; //イベント1では左方向へと変化できないようにする
                 StartCoroutine(canvasEvent0.Starting1());
                 break;
 
@@ -101,6 +106,10 @@ public class GameManager : MonoBehaviour
 
             case 2:
                 UpdateEvent2_AllTheTime();
+                break;
+
+            case 3:
+                UpdateEvent3_AllTheTime();
                 break;
 
             default:
@@ -277,15 +286,24 @@ public class GameManager : MonoBehaviour
 
     void UpdateEvent2_AllTheTime()
     {
-        if((player.pos.x <= ChangeScenePlayerXPositon) && (!event2_1Manager.nowMethod))
+        if((player.pos.x >= ChangeScenePlayerXPositon) && (!event2_1Manager.nowMethod))
         {
-            Debug.Log("条件を満たしました");
+            event2_1Manager.nowMethod = true;
+            Debug.Log("条件を達成しました");
             StartCoroutine(event2_1Manager.Starting1());
         }
 
         if (event2_1Manager.isEnd)
         {
             SceneManager.LoadScene("GameScene2"); //次のシーンに移る
+        }
+    }
+
+    void UpdateEvent3_AllTheTime()
+    {
+        if (event3_1Manager.isEnd)
+        {
+
         }
     }
 }

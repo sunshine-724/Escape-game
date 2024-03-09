@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*'Planes'にアタッチするスクリプト*/
+/*'PlaneManager'にアタッチするスクリプト*/
 
-public class Planes : MonoBehaviour
+public class PlaneManager : MonoBehaviour
 {
     /*ゲームオブジェクト*/
     [SerializeField] Transform parentPlanes; //親オブジェクトのtransformコンポーネントを取得する
     public GameObject[] plane; //個々の子オブジェクトを全て格納した配列
 
     /*変数宣言*/
-    public int childPlaneNumbers; //地面の数
+    public int childPlaneNumbers { get; private set;} //地面の数
     private Transform childTransform;  //子オブジェクトのtransformコンポーネント
 
     private void Awake()

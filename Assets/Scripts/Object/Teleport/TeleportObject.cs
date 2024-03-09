@@ -6,14 +6,28 @@ using UnityEngine;
 public class TeleportObject :MonoBehaviour
 {
     /*親クラスを取得する*/
-    [SerializeField] TeleportObjects teleportObjectClass;
+    [SerializeField] TeleportManager teleportManager;
+
+    /*各子オブジェクト*/
+    [SerializeField] GameObject TeleBlackObject;
+    [SerializeField] GameObject TeleWhiteObject;
 
     /*ゲームオブジェクト*/
-    [SerializeField] GameObject teleportPairObject; //テレポート先のオブジェクトを格納する
+    [SerializeField] GameObject teleportLocationObject; //テレポート先のオブジェクトを格納する
     // Start is called before the first frame update
     void Start()
     {
-        
+        /*設定したタグに沿って最初にアクティブにするオブジェクトをアクティブ化にする*/
+        if(this.gameObject.tag == "Black")
+        {
+            TeleBlackObject.SetActive(true);
+        }else if(this.gameObject.tag == "White"){
+            TeleWhiteObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("存在しないタグです");
+        }
     }
 
     // Update is called once per frame
@@ -25,26 +39,22 @@ public class TeleportObject :MonoBehaviour
     /*特定の条件下でキー操作をしてテレポートを使用可能にする*/
     public void Teleport(Player player)
     {
-        for (int k = 0; k < teleportObjectClass.childObjectNumbers; k++)
+        for (int k = 0; k < teleportManager.childObjectNumbers; k++)
         {
-            if (teleportObjectClass.childObjects[k].gameobject == teleportPairObject)
+            if (teleportManager.childObjects[k].gameobject == teleportLocationObject)
             {
                 Debug.Log(k + "番目のテレポーターにテレポートします"); //デバッグ
-                player.pos.x = teleportObjectClass.childObjects[k].gameobject.transform.position.x;
-                player.pos.y = teleportObjectClass.childObjects[k].gameobject.transform.position.y;
+                player.pos.x = teleportManager.childObjects[k].gameobject.transform.position.x;
+                player.pos.y = teleportManager.childObjects[k].gameobject.transform.position.y;
 
-                /*転送位置をちょっと調整(誤差分)*/
-                player.pos.x -= 1.0f;
-                player.pos.y -= 1.5f;
-
-                Debug.Log("転送位置は(" + teleportObjectClass.childObjects[k].gameobject.transform.position.x + "," + teleportObjectClass.childObjects[k].gameobject.transform.position.y + ")です");
+                Debug.Log("転送位置は(" + teleportManager.childObjects[k].gameobject.transform.position.x + "," + teleportManager.childObjects[k].gameobject.transform.position.y + ")です");
                 player.transform.position = player.pos; //座標を更新(テレポート)
                 Debug.Log("テレポート完了");
                 break;
             }
 
 
-            if (k==teleportObjectClass.childObjectNumbers)
+            if (k==teleportManager.childObjectNumbers)
             {
                 Debug.Log("テレポーター先が設定されていません");
             }

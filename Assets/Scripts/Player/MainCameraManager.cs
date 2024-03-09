@@ -11,7 +11,6 @@ public class MainCameraManager : MonoBehaviour
 
     public Vector3 CameraPos; //カメラの座標
     private const float ObjectOffset = -10; //オブジェクトとの距離
-    private const float stopCameraPositonX = -37; //プレイヤーとカメラの動きを同期させないようにする時のカメラのx座標
     private bool isMoveCamera; //カメラを動かしても良いか
 
     void Awake()
@@ -39,16 +38,6 @@ public class MainCameraManager : MonoBehaviour
             CameraPos.z += -10;  //カメラの座標に補正をかける
             mainCameraComponent.transform.position = CameraPos;
         }
-
-        /*もし指定された場所までカメラが行ったら*/
-        if(player.pos.x < stopCameraPositonX)
-        {
-            isMoveCamera = false; //カメラの動きを止める
-        }
-        else
-        {
-            isMoveCamera = true; //カメラの動きを再開する
-        }
     }
 
     //カメラを反転させる
@@ -62,6 +51,5 @@ public class MainCameraManager : MonoBehaviour
     {
         transform.RotateAround(this.transform.position, new Vector3(1, 0, 0), 0f);
         mainCameraComponent.ResetProjectionMatrix(); //シェードを取得
-        mainCameraComponent.projectionMatrix *= Matrix4x4.Scale(new Vector3(1, 1, 1)); //シェードの向きを元に戻す
     }
 }
