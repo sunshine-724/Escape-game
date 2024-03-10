@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] int EventNumber; //今何番目のイベントかをインスペクタで書く
+    public int EventNumber;//今何番目のイベントかをインスペクタで書く
 
     //イベント１関連
     [SerializeField] Event1_1Manager event1_1Manager;

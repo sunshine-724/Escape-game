@@ -58,7 +58,7 @@ public class TeleportManager : MonoBehaviour
     }
 }
 
-public class ChildTeleportObject: MonoBehaviour
+public class ChildTeleportObject
 {
     //各テレポーターの色の種類(後で増やすかも)
     //enum 定数を構造体形式で保存可能 呼び出す際はColor.Blackなどで呼び出す　またそれぞれ0,1,…で識別できる

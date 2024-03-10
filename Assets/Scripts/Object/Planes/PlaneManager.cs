@@ -19,8 +19,6 @@ public class PlaneManager : MonoBehaviour
         childPlaneNumbers = parentPlanes.transform.childCount; //子オブジェクトの数を取得する
         plane = new GameObject[childPlaneNumbers];
 
-        Debug.Log("子オブジェクトの数は" + childPlaneNumbers + "です");
-
         /*必要な分だけ子オブジェクトを取得する*/
         for (int k = 0; k < childPlaneNumbers; k++)
         {

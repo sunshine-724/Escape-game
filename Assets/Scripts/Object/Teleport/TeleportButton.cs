@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportButton
+public class TeleportButton :MonoBehaviour
 {
     public bool isButton { get;private set; } //ボタンを押したら反応してもよいか
 
-    [SerializeField] GameObject teleportObject; //変更したいオブジェクトを選択する
+    [SerializeField] Player player;
+    [SerializeField] TeleportObject changeTeleportObject; //変更したいオブジェクトを選択する
+    [SerializeField] string changeName; //何色に変えたいか指定する
 
     private void Awake()
     {
@@ -25,13 +27,28 @@ public class TeleportButton
     }
 
 
+    //もしプレイヤーと触れたら
     private void OnTriggerStay2D(Collider2D collision)
     {
-        isButton = true;
+        if(collision.gameObject == player.gameObject)
+        {
+            Debug.Log("ボタンに触れました");
+            isButton = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isButton = false;
+        if (collision.gameObject == player.gameObject)
+        {
+            Debug.Log("ボタンから離れました");
+            isButton = false;
+        }
+    }
+
+    //テレポーターの色を変える
+    public void ChangeColor()
+    {
+        changeTeleportObject.ChangeObject(changeName);
     }
 }

@@ -20,9 +20,9 @@ public class TeleportObject :MonoBehaviour
         /*設定したタグに沿って最初にアクティブにするオブジェクトをアクティブ化にする*/
         if(this.gameObject.tag == "Black")
         {
-            TeleBlackObject.SetActive(true);
+            ChangeObject("Black");
         }else if(this.gameObject.tag == "White"){
-            TeleWhiteObject.SetActive(true);
+            ChangeObject("White");
         }
         else
         {
@@ -58,6 +58,25 @@ public class TeleportObject :MonoBehaviour
             {
                 Debug.Log("テレポーター先が設定されていません");
             }
+        }
+    }
+
+    //指定された色に変える
+    public void ChangeObject(string colorName)
+    {
+        if(colorName == "Black")
+        {
+            TeleBlackObject.SetActive(true);
+            TeleWhiteObject.SetActive(false);
+        }
+        else if(colorName == "White")
+        {
+            TeleWhiteObject.SetActive(true);
+            TeleBlackObject.SetActive(false);
+        }
+        else
+        {
+
         }
     }
 }

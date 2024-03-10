@@ -971,6 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1315182978}
+  gameManager: {fileID: 1602956084}
   mainCameraComponent: {fileID: 650658826}
   CameraPos: {x: 0, y: 0, z: 0}
 --- !u!114 &683155420
@@ -4318,6 +4319,10 @@ PrefabInstance:
     - target: {fileID: 3356197772259555849, guid: 2df31dd1c4c5446f4948acdafdaee76b, type: 3}
       propertyPath: m_Name
       value: DefalutPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356197772259555849, guid: 2df31dd1c4c5446f4948acdafdaee76b, type: 3}
+      propertyPath: m_TagString
+      value: isJump
       objectReference: {fileID: 0}
     - target: {fileID: 7437861885425827974, guid: 2df31dd1c4c5446f4948acdafdaee76b, type: 3}
       propertyPath: m_AutoTiling

@@ -13,8 +13,9 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public Vector3 pos; //Playerの現在座標(読み取り専用）
 
     //フラグ関連
-    private bool isZKey; //Zキーを押したらイベントを発生しても良いか
+    private bool isTeleport; //テレポートをしても良いか
     public bool isMove; //プレイヤーが動いても良いか
+    private bool isGrounded; //地面と接地しているか
     private bool isJumping; //ジャンプしても良いか
     public bool isRightMove;
     public bool isLeftMove; //イベント1において左方向へ移動はできないようにする(GameManagerのみ書き換え可能)
@@ -48,18 +49,17 @@ public class Player : MonoBehaviour
 
     [SerializeField] TeleportManager teleportManager;
 
-    /*クラスは同じだがインスタンスが異なる(テレポート元)*/
+    /*クラスは同じだがインスタンスが異なる*/
     [SerializeField] TeleportObject[] teleObject;　//配列で指定する
-   
-
     [SerializeField] TeleportButton[] teleButton; //配列で指定する
 
     // Start is called before the first frame update
     void Awake()
     {
         pos = new Vector3(0.0f, 0.0f, 0.0f); //変数を初期化
+        isGrounded = true; //初期状態はtrue
         isJumping = false; //初期状態はfalse
-        isZKey = false; //初期状態はfalse
+        isTeleport = false; //初期状態はfalse
         isRunStepSound = true; //初期状態はtrue
         touchTeleportObject = -1; //最初はどことも接していないので-1
 
@@ -83,11 +83,11 @@ public class Player : MonoBehaviour
         /*現在座標を取得する*/
         pos = this.transform.position;
 
-        /*テレポーター関係*/
-        if(isZKey == true)
+        //もしZキーが押されたら
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            //もし許可が下りててZキーが押されたら
-            if (Input.GetKeyDown(KeyCode.Z))
+            /*テレポーター関係*/
+            if (isTeleport == true)
             {
                 switch (touchTeleportObject)
                 {
@@ -108,15 +108,25 @@ public class Player : MonoBehaviour
                         break;
                 }
 
-                isZKey = false; //一度無効化する
+                isTeleport = false; //一度無効化する
             }
+
+            /*テレポーターの色を変更するボタン関連*/
+            for(int k = 0; k < teleButton.Length; k++)
+            {
+                //特定のボタンと接した状態でZキーを押すと
+                if(teleButton[k].isButton == true)
+                {
+                    teleButton[k].ChangeColor(); //予め指定した色に変える
+                } 
+            }     
         }
 
         /*キーを取得する*/
         //水平キーを取得する
         if ((Input.GetKey(KeyCode.D) || (Input.GetKey(KeyCode.RightArrow))) && (isRightMove))
         {
-            if (isJumping)
+            if (isGrounded)
             {
                 idleObject.SetActive(false);
                 jumpObject.SetActive(false);
@@ -128,26 +138,26 @@ public class Player : MonoBehaviour
             }
             else
             {
-                //ジャンプをしている最中は待機モーションにならない
+                //空中にいる際は待機モーションにならない
             }
             mainCamera.CameraBaseRotation(); //カメラを元の向きに戻す
             Right(); //右側に移動する
         }
         else if ((Input.GetKey(KeyCode.A) || (Input.GetKey(KeyCode.LeftArrow))) && (isLeftMove))
         {
-            if (isJumping)
+            if (isGrounded)
             {
                 idleObject.SetActive(false);
                 jumpObject.SetActive(false);
                 runObject.SetActive(true);
                 if (isRunStepSound)
-                {    
+                {
                     StartCoroutine(RunStepSound());
                 }
             }
             else
             {
-                //ジャンプをしている最中は待機モーションにならない
+                //空中にいる際は待機モーションにならない
             }
             mainCamera.CameraReverseRotation(); //親オブジェクトを反転させたのでカメラを反転させる
             Left(); //左側に移動する
@@ -193,21 +203,36 @@ public class Player : MonoBehaviour
         //床の衝突判定
         if (planeManager != null)
         {
-            //Debug.Log("planes is not null");
             for (int k = 0; k < planeManager.childPlaneNumbers; k++)
             {
                 if (collision.gameObject == planeManager.plane[k])
                 {
-                    isJumping = true;
-                    //Debug.Log(k + "番目の床に当たっています");
-                    break;
+                    isGrounded = true; //地面に接地しているのでtrue
+
+                    //その床がジャンプを可能としているかタグでチェック
+                    if(collision.gameObject.tag == "isJump")
+                    {
+                        isJumping = true;
+                    }
+                    break; //地面は一つしか接しないのでこれ以上検索をかける必要がない
                 }
             }
         }
-        else
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        //床の衝突判定
+        if (planeManager != null)
         {
-            //たまにnullになるのでnullチェックを入れて回避
-            //Debug.Log("planes is null");
+            for (int k = 0; k < planeManager.childPlaneNumbers; k++)
+            {
+                if (collision.gameObject == planeManager.plane[k])
+                {
+                    isGrounded = false; //地面から離れたのでfalse
+                    break;  //地面は一つしか接しないのでこれ以上検索をかける必要がない
+                }
+            }
         }
     }
 
@@ -229,9 +254,8 @@ public class Player : MonoBehaviour
                     {
                         //接しているテレポーターのテレポート先を取得し、テレポートの許可を与える
                         Debug.Log("接しているテレポーターは使用可能です");
-                        isZKey = true; //Zキーを押したら反応するようにする
+                        isTeleport = true; //Zキーを押したら反応するようにする
                         touchTeleportObject = k; //接しているテレポーターに設定する
-
                         break;
                     }
                     else
@@ -241,10 +265,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        else
-        {
-           
-        }
     }
 
     //テレポーターとの接地が解消された時に呼ばれる
@@ -253,7 +273,7 @@ public class Player : MonoBehaviour
         if (touchTeleportObject != -1)
         {
             Debug.Log("テレポーターから離れました");
-            isZKey = false; //Zキーを押しても反応しないようにする
+            isTeleport = false; //Zキーを押しても反応しないようにする
             touchTeleportObject = -1; //どことも接していないので
         }
     }
