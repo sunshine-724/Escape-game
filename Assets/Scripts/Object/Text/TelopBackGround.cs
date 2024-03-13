@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Text1_3_2 : MonoBehaviour
+public class TelopBackGround : MonoBehaviour
 {
-    [SerializeField] Appeartext appeartext;
     [SerializeField] FadeIn fadeIn;
 
     // Start is called before the first frame update
@@ -17,11 +16,6 @@ public class Text1_3_2 : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public IEnumerator Starting()
-    {
-        yield return StartCoroutine(appeartext.AppearCenterText()); //このメソッドを文字を出力できるまで止める
     }
 
     public IEnumerator ThisObjectFadeIn()

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Event1_1Manager : MonoBehaviour
 {
-    [SerializeField] Text1_1_1 text1_1_1;
+    [SerializeField] Telop telop;
+    [SerializeField] TextObject text1_1_1;
     [SerializeField] Image_Event1 Image1_1_1OpenEyes;
     [SerializeField] Image_Event1 image1_1_2Prison;
 
@@ -16,7 +17,7 @@ public class Event1_1Manager : MonoBehaviour
     void Start()
     {
        nowEvent = 1; //現在のイベント
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -42,8 +43,9 @@ public class Event1_1Manager : MonoBehaviour
 
     public IEnumerator Ending()
     {
-        yield return StartCoroutine(Image1_1_1OpenEyes.ThisObjectFadeIn()); //画像を非表示
-        yield return StartCoroutine(text1_1_1.ThisObjectFadeIn());
+        //このイベントに関するもの全てをフェードインさせる
+        yield return StartCoroutine(Image1_1_1OpenEyes.ThisObjectFadeIn()); 
+        yield return StartCoroutine(telop.ThisObjectFadeIn());
 
         Debug.Log("イベント1_1のエンディングログ");
         isEnd = true;

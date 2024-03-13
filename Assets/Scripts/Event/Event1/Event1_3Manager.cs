@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class Event1_3Manager : MonoBehaviour
 {
-    [SerializeField] Text1_3_1 text1_3_1;
-    [SerializeField] Text1_3_2 text1_3_2;
+    [SerializeField] Telop telop1_3_1;
+    [SerializeField] Telop telop1_3_2;
 
+    [SerializeField] TextObject text1_3_1;
+    [SerializeField] TextObject text1_3_2;
+
+    [SerializeField] TelopBackGround telopBackGround1;
+    [SerializeField] TelopBackGround telopBackGround2;
+
+
+    //背景
     [SerializeField] Image_Event1 image_Event1_3_1;
     [SerializeField] Image_Event1 image_Event1_3_2;
 
+    //警報音の音源
     [SerializeField] SoundBoxScript soundBox;
 
     public int nowEvent = 0; //現在のイベント
@@ -30,6 +39,8 @@ public class Event1_3Manager : MonoBehaviour
 
     public IEnumerator Starting1()
     {
+        telop1_3_2.gameObject.SetActive(false); //非アクティブ化
+
         nowMethod = true;
         yield return StartCoroutine(text1_3_1.Starting()); //EnemyA
         Debug.Log("コルーチン完了");
@@ -40,7 +51,10 @@ public class Event1_3Manager : MonoBehaviour
     public IEnumerator Starting2()
     {
         nowMethod = true;
-        text1_3_1.gameObject.SetActive(false); //EnemyBのセリフが挟むので一度EnemyAのセリフを一時的に非アクティブにする
+
+        telop1_3_1.gameObject.SetActive(false); //非アクティブ化
+        telop1_3_2.gameObject.SetActive(true); //アクティブ化
+
         yield return StartCoroutine(text1_3_2.Starting()); //EnemyBのセリフを待つ
         nowMethod = false;
         nowEvent++;

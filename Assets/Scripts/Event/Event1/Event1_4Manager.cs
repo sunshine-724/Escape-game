@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Event1_4Manager : MonoBehaviour
 {
-    [SerializeField] Text1_4_1 text1_4_1;
+    [SerializeField] TelopBackGround telopBackGround;
+    [SerializeField] TextObject text1_4;
 
     [SerializeField] Image_Event1 image_Event1_4_1;
 
@@ -29,7 +30,7 @@ public class Event1_4Manager : MonoBehaviour
     public IEnumerator Starting1()
     {
         nowMethod = true;
-        yield return StartCoroutine(text1_4_1.Starting()); //テキストを出力させる
+        yield return StartCoroutine(text1_4.Starting()); //テキストを出力させる
         nowMethod = false;
         nowEvent++;
     }

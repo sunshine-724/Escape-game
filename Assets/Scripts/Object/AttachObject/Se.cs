@@ -21,7 +21,7 @@ public class Se : MonoBehaviour
             audioSource = thisGameObject.GetComponent<AudioSource>(); //指定したオブジェクトのコンポーネントを取得する
         }
 
-        if(audioSource != null)
+        if(source != null)
         {
             sourceLength = source.length; //音源の長さを取得する
         }
