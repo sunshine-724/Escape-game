@@ -41,13 +41,11 @@ public class Player : MonoBehaviour
     /*他クラスを取得する*/
     //外部オブジェクト関連
     [SerializeField] PlaneManager planeManager;
-    [SerializeField] TeleportManager teleObjects;
 
     //SE関連
     [SerializeField] Se jumpSound;
     [SerializeField] Se stepSound;
 
-    [SerializeField] TeleportManager teleportManager;
 
     /*クラスは同じだがインスタンスが異なる*/
     [SerializeField] TeleportObject[] teleObject;　//配列で指定する
@@ -165,7 +163,7 @@ public class Player : MonoBehaviour
         else
         {
             //待機モーション
-            if (isJumping)
+            if (isGrounded)
             {
                 runObject.SetActive(false);
                 jumpObject.SetActive(false);
@@ -173,7 +171,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                //ジャンプをしている最中は待機モーションにならない
+                //空中にいる際は待機モーションにならない
             }
 
             if (!isRunStepSound)
@@ -236,33 +234,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    //テレポーターとの接地判定
+    //トリガー判定
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //nullチェック(nullの場合アクセスするとNullReferenceを返されるので判定しない)
-        if (teleObjects != null)
+        //全部のテレポーターに関して検索をかける
+        for(int k = 0; k < teleObject.Length; k++)
         {
-            //どのテレポーターと接しているか
-            for (int k = 0; k < teleObjects.childObjectNumbers; k++)
+            if(collision.gameObject == teleObject[k].gameObject)
             {
-                /*テレポーターと接している場合*/
-                if ((collision.gameObject == teleObjects.childObjects[k].gameobject))
+                Debug.Log(k + "番目のテレポーターと接しています");
+
+                if (teleObject[k].isTeleport)
                 {
-                    Debug.Log(k + "番目のテレポーターと接しています");
-                    //そのテレポーターが使用可能なら指定された所へテレポートする
-                    if (teleObjects.childObjects[k].isTeleport == true)
-                    {
-                        //接しているテレポーターのテレポート先を取得し、テレポートの許可を与える
-                        Debug.Log("接しているテレポーターは使用可能です");
-                        isTeleport = true; //Zキーを押したら反応するようにする
-                        touchTeleportObject = k; //接しているテレポーターに設定する
-                        break;
-                    }
-                    else
-                    {
-                        Debug.Log("接しているテレポーターは使用できません");
-                    }
+                    //接しているテレポーターのテレポート先を取得し、テレポートの許可を与える
+                    Debug.Log("接しているテレポーターは使用可能です");
+                    isTeleport = true; //Zキーを押したら反応するようにする
+                    touchTeleportObject = k; //接しているテレポーターに設定する
+                    break;
                 }
+                else
+                {
+                    Debug.Log("接しているテレポーターは使用できません");
+                }
+            }
+        }
+
+        for(int k = 0; k < teleButton.Length; k++)
+        {
+            if(collision.gameObject == teleButton[k].gameObject)
+            {
+                Debug.Log(k + "番目のボタンと接してます");
             }
         }
     }

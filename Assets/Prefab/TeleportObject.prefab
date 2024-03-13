@@ -190,10 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b622008fea54d9bbaf42bde521267b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportManager: {fileID: 0}
   TeleBlackObject: {fileID: 4034391241868317315}
   TeleWhiteObject: {fileID: 6674521829512101116}
-  teleportLocationObject: {fileID: 0}
+  teleportLocationObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  ObjectNumber: 0
 --- !u!1 &6674521829512101116
 GameObject:
   m_ObjectHideFlags: 0

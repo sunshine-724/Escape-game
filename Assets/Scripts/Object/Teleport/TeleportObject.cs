@@ -5,15 +5,31 @@ using UnityEngine;
 /*プレハブ化されたテレポートオブジェクトにアタッチする*/
 public class TeleportObject :MonoBehaviour
 {
-    /*親クラスを取得する*/
-    [SerializeField] TeleportManager teleportManager;
-
     /*各子オブジェクト*/
     [SerializeField] GameObject TeleBlackObject;
     [SerializeField] GameObject TeleWhiteObject;
 
-    /*ゲームオブジェクト*/
-    [SerializeField] GameObject teleportLocationObject; //テレポート先のオブジェクトを格納する
+    public enum Color
+    {
+        BLACK = 0,
+        WHITE = 1,
+    }
+
+    /*テレポート先*/
+    [SerializeField] TeleportObject[] teleportLocationObject; //各色に対して、テレポート先のオブジェクトを格納する
+
+    /*変数宣言*/
+    [SerializeField] int ObjectNumber; //各テレポーターを区別するための番号
+    public int isColor { get; private set; } //今このテレポーターがどの色をしているか
+    public bool isTeleport { get; private set; } //テレポートを使えるかどうか
+
+
+    private void Awake()
+    {
+
+        isTeleport = true; //最初は全部のテレポータを使用可能にする
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,25 +55,18 @@ public class TeleportObject :MonoBehaviour
     /*特定の条件下でキー操作をしてテレポートを使用可能にする*/
     public void Teleport(Player player)
     {
-        for (int k = 0; k < teleportManager.childObjectNumbers; k++)
+        if(teleportLocationObject[isColor] != null)
         {
-            if (teleportManager.childObjects[k].gameobject == teleportLocationObject)
-            {
-                Debug.Log(k + "番目のテレポーターにテレポートします"); //デバッグ
-                player.pos.x = teleportManager.childObjects[k].gameobject.transform.position.x;
-                player.pos.y = teleportManager.childObjects[k].gameobject.transform.position.y;
+            player.pos.x = teleportLocationObject[isColor].transform.position.x;
+            player.pos.y = teleportLocationObject[isColor].transform.position.y;
 
-                Debug.Log("転送位置は(" + teleportManager.childObjects[k].gameobject.transform.position.x + "," + teleportManager.childObjects[k].gameobject.transform.position.y + ")です");
-                player.transform.position = player.pos; //座標を更新(テレポート)
-                Debug.Log("テレポート完了");
-                break;
-            }
-
-
-            if (k==teleportManager.childObjectNumbers)
-            {
-                Debug.Log("テレポーター先が設定されていません");
-            }
+            Debug.Log("転送位置は" + player.pos.x + "," + player.pos.y + "です");
+            player.transform.position = player.pos;
+            Debug.Log("テレポート完了");
+        }
+        else
+        {
+            Debug.Log("テレポーター先が設定されていません");
         }
     }
 
@@ -68,15 +77,19 @@ public class TeleportObject :MonoBehaviour
         {
             TeleBlackObject.SetActive(true);
             TeleWhiteObject.SetActive(false);
+
+            isColor = (int)Color.BLACK;
         }
         else if(colorName == "White")
         {
             TeleWhiteObject.SetActive(true);
             TeleBlackObject.SetActive(false);
+
+            isColor = (int)Color.WHITE;
         }
         else
         {
-
+            Debug.Log("その色は存在しません");
         }
     }
 }
