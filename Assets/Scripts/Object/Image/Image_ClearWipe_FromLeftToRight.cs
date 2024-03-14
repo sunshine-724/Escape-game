@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Image_Event2 : MonoBehaviour
+public class Image_ClearWipe_FromLeftToRight : MonoBehaviour
 {
     RectTransform rectTransformComponent;
     float widthLength; //画像の横幅
@@ -16,15 +16,17 @@ public class Image_Event2 : MonoBehaviour
 
         isActive = false;
         //画像の横幅を取得する
-        widthLength = rectTransformComponent.sizeDelta.x;
+        widthLength = 987.5f;
         //現在のピボットの距離を取得
         offsetMinXY = rectTransformComponent.offsetMin;
         offsetMaxXY = rectTransformComponent.offsetMax;
+
+        this.gameObject.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -32,18 +34,18 @@ public class Image_Event2 : MonoBehaviour
     {
         if (isActive)
         {
-            offsetMaxXY.x += 2.0f; //徐々に右に寄せに行く
+            offsetMinXY.x += 3.0f; //徐々に右に寄せに行く
 
             //更新
             rectTransformComponent.offsetMin = offsetMinXY;
             rectTransformComponent.offsetMax = offsetMaxXY;
 
-            //完全にブラックアウト化したらやめさせる
-            if (offsetMaxXY.x > 0)
+            //完全に透明化したらやめさせる
+            if (offsetMinXY.x  > widthLength)
             {
                 isActive = false;
+                Debug.Log("終了");
             }
-
         }
     }
 

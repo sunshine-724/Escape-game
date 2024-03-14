@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     //イベント3関連
     [SerializeField] Event3_1Manager event3_1Manager;
+    [SerializeField] Event3_2Manager event3_2Manager;
 
     //bgm
     [SerializeField] GameObject soundBox_Bgm;
@@ -31,12 +32,11 @@ public class GameManager : MonoBehaviour
     //変数宣言
     private bool nextEvent = false; //次のイベントを開始しても良いか(大きなイベントで）
 
-    private const float ChangeScenePlayerXPositon = 40; //プレイヤーがこのX座標より左に行ったらシーンを切り替える
+    [SerializeField] float ChangeScenePlayerXPositon; //プレイヤーがこのX座標より左に行ったらシーンを切り替える(シーン毎に数値が異なる)
 
 
     private void Awake()
     {
-
         //どのゲームマネージャーかで実行する内容を変える
         switch (EventNumber)
         {
@@ -288,8 +288,7 @@ public class GameManager : MonoBehaviour
     {
         if((player.pos.x >= ChangeScenePlayerXPositon) && (!event2_1Manager.nowMethod))
         {
-            event2_1Manager.nowMethod = true;
-            Debug.Log("条件を達成しました");
+            event2_1Manager.nowMethod = true; //連続で条件を満たさないようにする
             StartCoroutine(event2_1Manager.Starting1());
         }
 
@@ -301,9 +300,14 @@ public class GameManager : MonoBehaviour
 
     void UpdateEvent3_AllTheTime()
     {
-        if (event3_1Manager.isEnd)
+        if ((event3_1Manager.isEnd) &&　(player.pos.x >=ChangeScenePlayerXPositon))
         {
+            StartCoroutine(event3_2Manager.Starting1()); //ワイプを実行
+        }
 
+        if (event3_2Manager.isEnd)
+        {
+            SceneManager.LoadScene("GameScene3"); //次のシーンに移る
         }
     }
 }

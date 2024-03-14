@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Event3_1Manager : MonoBehaviour
 {
-    [SerializeField] Image_Event3 image_Event3;
+    [SerializeField] Image_ClearWipe_FromLeftToRight image_Event3_1;
 
     public bool isEnd = false;
 
@@ -17,14 +17,15 @@ public class Event3_1Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!image_Event3.isActive)
+        if (!image_Event3_1.isActive)
         {
             isEnd = true; //ワイプ終了時
         }
     }
 
+    //シーン変更の後すぐにワイプを実行
     public void Starting1()
     {
-        image_Event3.gameObject.SetActive(true); //ワイプ
+        image_Event3_1.gameObject.SetActive(true); //ワイプ
     }
 }

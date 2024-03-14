@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Event2_1Manager : MonoBehaviour
 {
-    [SerializeField] Image_Event2 Image2_1_1;
+    [SerializeField] Image_BlackWipe_FromLeftToRight Image2_1_1;
     public bool nowMethod = false; //現在他クラスのコルーチンが実行中であるかどうか
     public bool isEnd = false;
 
