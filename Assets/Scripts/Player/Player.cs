@@ -13,12 +13,18 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public Vector3 pos; //Playerの現在座標(読み取り専用）
 
     //フラグ関連
+    //アクション関連
     private bool isTeleport; //テレポートをしても良いか
-    public bool isMove; //プレイヤーが動いても良いか
+    private bool isPoster; //ポスターの中身を表示したり、非表示にしたりしても良いか
+    private bool isPC; //PCの中身を表示したり、非表示したりしても良いか
+
+    //プレイヤー関連
     private bool isGrounded; //地面と接地しているか
     private bool isJumping; //ジャンプしても良いか
     public bool isRightMove;
     public bool isLeftMove; //イベント1において左方向へ移動はできないようにする(GameManagerのみ書き換え可能)
+
+    //持ち物関連
 
     //SE関連
     private bool isRunStepSound; //ステップサウンドが連続して再生されないようにする
@@ -51,19 +57,25 @@ public class Player : MonoBehaviour
     [SerializeField] TeleportObject[] teleObject;　//配列で指定する
     [SerializeField] TeleportButton[] teleButton; //配列で指定する
 
+    [SerializeField] Poster poster; //イベント4で使用するポスター
+    [SerializeField] PC pc; //イベント4で使用するPC
+
     // Start is called before the first frame update
     void Awake()
     {
+        //プレイヤー関連
         pos = new Vector3(0.0f, 0.0f, 0.0f); //変数を初期化
         isGrounded = true; //初期状態はtrue
         isJumping = false; //初期状態はfalse
         isTeleport = false; //初期状態はfalse
         isRunStepSound = true; //初期状態はtrue
+
+        //アクション関連
+        isPoster = false;
+        isPC = false;
         touchTeleportObject = -1; //最初はどことも接していないので-1
 
-        //左右に動かしてもよい
-        isRightMove = true;
-        isLeftMove = true;
+        IsMove(true); //初期状態ではtrue
 
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //コンポーネントを取得する
     }
@@ -117,7 +129,19 @@ public class Player : MonoBehaviour
                 {
                     teleButton[k].ChangeColor(); //予め指定した色に変える
                 } 
-            }     
+            }
+
+            /*ポスター関連*/
+            if (isPoster)
+            {
+                poster.checkStatus(); //ポスターを開いたり、閉じたりする
+            }
+
+            /*PC関連*/
+            if (isPC)
+            {
+                pc.checkStatus(); //pcを開いたり、閉じたりする
+            }
         }
 
         /*キーを取得する*/
@@ -259,12 +283,25 @@ public class Player : MonoBehaviour
             }
         }
 
+        //もしテレポーターの色を変更するボタンに触れていたら
         for(int k = 0; k < teleButton.Length; k++)
         {
             if(collision.gameObject == teleButton[k].gameObject)
             {
                 Debug.Log(k + "番目のボタンと接してます");
             }
+        }
+
+        //もしポスターと接触していたら
+        if (collision.gameObject == poster.gameObject)
+        {
+            isPoster = true; //Zキーを押すとポスターの中身が表示させるようにする
+        }
+
+        //もしPCを接触していたら
+        if(collision.gameObject == pc.gameObject)
+        {
+            isPC = true; //Zキーを押すとPCの中身が表示させるようにする
         }
     }
 
@@ -276,6 +313,12 @@ public class Player : MonoBehaviour
             Debug.Log("テレポーターから離れました");
             isTeleport = false; //Zキーを押しても反応しないようにする
             touchTeleportObject = -1; //どことも接していないので
+        }else if(collision.gameObject == poster.gameObject)
+        {
+            isPoster = false; //ポスターから離れるので中身を見る許可をなくす
+        }else if(collision.gameObject == pc.gameObject)
+        {
+            isPC = false; //PCから離れるので中身を見る許可をなくす
         }
     }
     /*落下判定*/
@@ -307,6 +350,21 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         this.rb.AddForce(jumpForce, ForceMode2D.Impulse); //垂直方法へと力を加える
+    }
+
+    //引数によってプレイヤーの動きを制御できる
+    public void IsMove(bool status)
+    {
+        if (status)
+        {
+            isRightMove = true;
+            isLeftMove = true;
+        }
+        else
+        {
+            isRightMove = false;
+            isLeftMove = false;
+        }
     }
 
     public IEnumerator RunStepSound()

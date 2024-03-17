@@ -56,6 +56,9 @@ TagManager:
   - name: PlayerOrEnemy
     uniqueID: 1908210095
     locked: 0
+  - name: Canvas_UI
+    uniqueID: 2165596081
+    locked: 0
   - name: Canvas_Event3
     uniqueID: 1082614557
     locked: 0

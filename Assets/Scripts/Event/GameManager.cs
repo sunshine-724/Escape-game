@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         switch (EventNumber)
         {
             case 0:
-                player.isLeftMove = false; //イベント1では左方向へと変化できないようにする
+                player.IsMove(false); //最初はプレイヤーを動かせないようにする
                 StartCoroutine(canvasEvent0.Starting1());
                 break;
 
@@ -278,7 +278,8 @@ public class GameManager : MonoBehaviour
             event1_4Manager.nowMethod = true;
             CanvasEvent1.SetActive(false); //関連するもの全てfalse
 
-            player.isMove = true; //プレイヤーが動くのを許可する
+            player.IsMove(true); //プレイヤーが動けるようにする
+            player.isLeftMove = false; //ただし、左にはいけないようにする
             Debug.Log("イベント1終了");
             nextEvent = true; //次のイベントにいける許可を与える
         }

@@ -46,7 +46,7 @@ public class MainCameraManager : MonoBehaviour
                 CameraPos.y = player.pos.y; //y座標をプレイヤーと同じにする
             }
         }
-        else if(gameManager.EventNumber == 3)
+        else if(gameManager.EventNumber >= 3)
         {
             CameraPos.x = player.pos.x; //x座標をプレイヤーのx座標と同じにする
         }
