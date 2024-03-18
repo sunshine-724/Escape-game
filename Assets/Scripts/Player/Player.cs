@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private bool isTeleport; //テレポートをしても良いか
     private bool isPoster; //ポスターの中身を表示したり、非表示にしたりしても良いか
     private bool isPC; //PCの中身を表示したり、非表示したりしても良いか
+    private bool isCoin; //金庫にアクセスしても良いか
 
     //プレイヤー関連
     private bool isGrounded; //地面と接地しているか
@@ -41,11 +42,12 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject idleObject; //キャラが待機する
     [SerializeField] GameObject jumpObject; //キャラがジャンプする
 
+    [SerializeField] Inventory inventory; //インベントリ
     /*子クラスを取得する*/
     [SerializeField] MainCameraManager mainCamera;
 
     /*他クラスを取得する*/
-    //外部オブジェクト関連
+    //地面を管理
     [SerializeField] PlaneManager planeManager;
 
     //SE関連
@@ -57,8 +59,10 @@ public class Player : MonoBehaviour
     [SerializeField] TeleportObject[] teleObject;　//配列で指定する
     [SerializeField] TeleportButton[] teleButton; //配列で指定する
 
+    /*各イベントのオブジェクト*/
     [SerializeField] Poster poster; //イベント4で使用するポスター
     [SerializeField] PC pc; //イベント4で使用するPC
+    [SerializeField] Coin coin; //イベント4で使用するコイン
 
     // Start is called before the first frame update
     void Awake()
@@ -73,6 +77,7 @@ public class Player : MonoBehaviour
         //アクション関連
         isPoster = false;
         isPC = false;
+        isCoin = false;
         touchTeleportObject = -1; //最初はどことも接していないので-1
 
         IsMove(true); //初期状態ではtrue
@@ -140,7 +145,29 @@ public class Player : MonoBehaviour
             /*PC関連*/
             if (isPC)
             {
-                pc.checkStatus(); //pcを開いたり、閉じたりする
+                if (pc.pc_Power.gameObject.activeSelf)
+                {
+                    IsMove(true); //再度プレイヤーを動けるようにする
+                    pc.checkStatus(); //pcを閉じる
+                }
+                else
+                {
+                    IsMove(false); //プレイヤーを動けないようにする
+                    pc.checkStatus(); //pcを開ける
+                }
+            }
+
+            if (isCoin)
+            {
+                if(coin.coinPassword.gameObject.activeSelf)
+                {
+                    IsMove(true); //再度プレイヤーを動けるようにする
+                    coin.checkStatus(); //パスワード画面を閉じる
+                }else if ((!coin.coinPassword.gameObject.activeSelf) && (!inventory.CheckInventory("Key")))
+                {
+                    IsMove(false); //プレイヤーを動けないようにする
+                    coin.checkStatus(); //パスワード画面を開ける
+                }
             }
         }
 
@@ -303,6 +330,12 @@ public class Player : MonoBehaviour
         {
             isPC = true; //Zキーを押すとPCの中身が表示させるようにする
         }
+
+        //もし金庫と接触していたら
+        if(collision.gameObject == coin.gameObject)
+        {
+            isCoin = true; //Zキーを押すと金庫にアクセスできるようにする
+        }
     }
 
     //テレポーターとの接地が解消された時に呼ばれる
@@ -319,6 +352,9 @@ public class Player : MonoBehaviour
         }else if(collision.gameObject == pc.gameObject)
         {
             isPC = false; //PCから離れるので中身を見る許可をなくす
+        }else if(collision.gameObject == coin.gameObject)
+        {
+            isCoin = false; //金庫にアクセスできないようにする
         }
     }
     /*落下判定*/
