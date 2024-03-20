@@ -311,6 +311,8 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameScene3"); //次のシーンに移る
         }
     }
+
+    
 }
 
 

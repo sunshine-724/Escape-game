@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private bool isPoster; //ポスターの中身を表示したり、非表示にしたりしても良いか
     private bool isPC; //PCの中身を表示したり、非表示したりしても良いか
     private bool isCoin; //金庫にアクセスしても良いか
+    private bool isDoor; //ドアにアクセスしても良いか
 
     //プレイヤー関連
     private bool isGrounded; //地面と接地しているか
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour
     [SerializeField] Poster poster; //イベント4で使用するポスター
     [SerializeField] PC pc; //イベント4で使用するPC
     [SerializeField] Coin coin; //イベント4で使用するコイン
+    [SerializeField] Door door; //イベント4で使用するドア
 
     // Start is called before the first frame update
     void Awake()
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
         isPoster = false;
         isPC = false;
         isCoin = false;
+        isDoor = false;
         touchTeleportObject = -1; //最初はどことも接していないので-1
 
         IsMove(true); //初期状態ではtrue
@@ -157,6 +160,7 @@ public class Player : MonoBehaviour
                 }
             }
 
+            /*金庫関連*/
             if (isCoin)
             {
                 if(coin.coinPassword.gameObject.activeSelf)
@@ -168,6 +172,12 @@ public class Player : MonoBehaviour
                     IsMove(false); //プレイヤーを動けないようにする
                     coin.checkStatus(); //パスワード画面を開ける
                 }
+            }
+
+            /*ドア関連*/
+            if (isDoor)
+            {
+                door.OpenTheDoor();
             }
         }
 
@@ -336,6 +346,12 @@ public class Player : MonoBehaviour
         {
             isCoin = true; //Zキーを押すと金庫にアクセスできるようにする
         }
+
+        //もしドアと接触していたら
+        if(collision.gameObject == door.gameObject)
+        {
+            isDoor = true; //Zキーを押すとドアにアクセスできるようにする
+        }
     }
 
     //テレポーターとの接地が解消された時に呼ばれる
@@ -355,6 +371,9 @@ public class Player : MonoBehaviour
         }else if(collision.gameObject == coin.gameObject)
         {
             isCoin = false; //金庫にアクセスできないようにする
+        }else if(collision.gameObject == door.gameObject)
+        {
+            isDoor = false; //ドアにアクセスできないようにする
         }
     }
     /*落下判定*/
