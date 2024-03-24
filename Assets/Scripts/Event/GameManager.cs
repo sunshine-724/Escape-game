@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int EventNumber;//今何番目のイベントかをインスペクタで書く
+    public int EventNumber;//今何番目のイベントかをインスペクタで書く(最終イベント（Endingは10にする)
 
     //イベント１関連
     [SerializeField] Event1_1Manager event1_1Manager;
@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Event3_1Manager event3_1Manager;
     [SerializeField] Event3_2Manager event3_2Manager;
 
+    //イベント10関連
+    [SerializeField] Ending ending; //エンディングを管理するクラス
+    [SerializeField] Enemy enemy; //敵キャラ
+
     //bgm
     [SerializeField] GameObject soundBox_Bgm;
 
@@ -31,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     //変数宣言
     private bool nextEvent = false; //次のイベントを開始しても良いか(大きなイベントで）
+
+    bool event10StartFlag = true; //イベント10を始めても良いか
 
     [SerializeField] float ChangeScenePlayerXPositon; //プレイヤーがこのX座標より左に行ったらシーンを切り替える(シーン毎に数値が異なる)
 
@@ -88,7 +94,9 @@ public class GameManager : MonoBehaviour
                 case 1:
                     Update_Event1_InputZKey();
                     break;
-
+                case 10:
+                    Update_Event10_InputZKey();
+                    break;
                 default:
                     break;
             }
@@ -110,6 +118,10 @@ public class GameManager : MonoBehaviour
 
             case 3:
                 UpdateEvent3_AllTheTime();
+                break;
+
+            case 10:
+                UpdateEvent10_AllTheTime();
                 break;
 
             default:
@@ -143,6 +155,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*UpdateメソッドでZキーが押されている間、常に呼び出されるメソッド*/
     void Update_Event0_InputZKey()
     {
         /*イベント0関連*/
@@ -244,6 +257,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update_Event10_InputZKey()
+    {
+        ending.InputZkey();
+    }
+
+    /*Updateメソッドで常に呼び出されるメソッド*/
     void UpdateEvent0_AllTheTime()
     {
         //もし各イベント0が終了してかつコルーチンが実行されていなかったら
@@ -312,7 +331,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+    void UpdateEvent10_AllTheTime()
+    {
+        if ((EventNumber == 10) && (player.pos.x >= ChangeScenePlayerXPositon) && (event10StartFlag))
+        {
+            player.pos.x = 60.5f;
+            event10StartFlag = false;
+            player.IsMove(false); //プレイヤーを止める
+            player.Left(); //プレイヤーを強制的に左へ向かせる
+            StartCoroutine(ending.StartEndingText()); //エンディング開始
+        }
+    }
 }
 
 

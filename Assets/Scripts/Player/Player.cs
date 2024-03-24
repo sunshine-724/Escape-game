@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public bool isRightMove;
     public bool isLeftMove; //イベント1において左方向へ移動はできないようにする(GameManagerのみ書き換え可能)
 
+    private Vector2 stairForce; //段差につまづいた時に垂直方向へと力を加える
+
     //持ち物関連
 
     //SE関連
@@ -34,6 +36,8 @@ public class Player : MonoBehaviour
     //その他
     private const float fallPositon = -10; //プレイヤーが落下したとみなす座標(調整可能)
     private int touchTeleportObject; //何番目のテレポートオブジェクトと接しているか(していない場合-1を格納)
+
+    private float stairSize; //段差のサイズに応じて垂直に加える力のサイズを変える
 
     Rigidbody2D rb; //このオブジェクトのコンポーネント
 
@@ -56,9 +60,12 @@ public class Player : MonoBehaviour
     [SerializeField] Se stepSound;
 
 
-    /*クラスは同じだがインスタンスが異なる*/
+    /*クラスは同じだがインスタンスが異なる(オブジェクト)*/
     [SerializeField] TeleportObject[] teleObject;　//配列で指定する
     [SerializeField] TeleportButton[] teleButton; //配列で指定する
+
+    [SerializeField] GameObject stairManager; //親オブジェクト
+    [SerializeField] Stair[] stair; //各階段の段差;
 
     /*各イベントのオブジェクト*/
     [SerializeField] Poster poster; //イベント4で使用するポスター
@@ -86,6 +93,12 @@ public class Player : MonoBehaviour
         IsMove(true); //初期状態ではtrue
 
         rb = this.gameObject.GetComponent<Rigidbody2D>(); //コンポーネントを取得する
+
+        if(stairManager != null)
+        {
+            stairSize = stairManager.transform.localScale.x; //段差のサイズを取得
+            stairForce = new Vector2(0.0f, (10.0f) * stairSize); //サイズによって大きさを変える
+        }
     }
 
     private void Start()
@@ -125,7 +138,6 @@ public class Player : MonoBehaviour
                         Debug.Log("そのテレポーターは登録されていません");
                         break;
                 }
-
                 isTeleport = false; //一度無効化する
             }
 
@@ -257,6 +269,18 @@ public class Player : MonoBehaviour
     }
 
     /*衝突判定*/
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //階段の段差の衝突判定
+        for(int k = 0; k < stair.Length; k++)
+        {
+            if (collision.gameObject == stair[k].gameObject)
+            {
+                this.rb.AddForce(stairForce, ForceMode2D.Impulse); //垂直方法へと力を加える
+                Debug.Log("実行中");
+            }
+        }
+    }
     private void OnCollisionStay2D(Collision2D collision)
     {
         //床の衝突判定
@@ -330,25 +354,25 @@ public class Player : MonoBehaviour
         }
 
         //もしポスターと接触していたら
-        if (collision.gameObject == poster.gameObject)
+        if ((poster != null) && collision.gameObject == poster?.gameObject)
         {
             isPoster = true; //Zキーを押すとポスターの中身が表示させるようにする
         }
 
         //もしPCを接触していたら
-        if(collision.gameObject == pc.gameObject)
+        if((poster != null) && collision.gameObject == pc.gameObject)
         {
             isPC = true; //Zキーを押すとPCの中身が表示させるようにする
         }
 
         //もし金庫と接触していたら
-        if(collision.gameObject == coin.gameObject)
+        if((coin != null) && collision.gameObject == coin.gameObject)
         {
             isCoin = true; //Zキーを押すと金庫にアクセスできるようにする
         }
 
         //もしドアと接触していたら
-        if(collision.gameObject == door.gameObject)
+        if((door != null) && collision.gameObject == door.gameObject)
         {
             isDoor = true; //Zキーを押すとドアにアクセスできるようにする
         }
@@ -362,16 +386,16 @@ public class Player : MonoBehaviour
             Debug.Log("テレポーターから離れました");
             isTeleport = false; //Zキーを押しても反応しないようにする
             touchTeleportObject = -1; //どことも接していないので
-        }else if(collision.gameObject == poster.gameObject)
+        }else if((poster != null) &&(collision.gameObject == poster.gameObject))
         {
             isPoster = false; //ポスターから離れるので中身を見る許可をなくす
-        }else if(collision.gameObject == pc.gameObject)
+        }else if((pc !=null) &&(collision.gameObject == pc.gameObject))
         {
             isPC = false; //PCから離れるので中身を見る許可をなくす
-        }else if(collision.gameObject == coin.gameObject)
+        }else if((coin != null) && (collision.gameObject == coin.gameObject))
         {
             isCoin = false; //金庫にアクセスできないようにする
-        }else if(collision.gameObject == door.gameObject)
+        }else if((door != null) &&(collision.gameObject == door.gameObject))
         {
             isDoor = false; //ドアにアクセスできないようにする
         }

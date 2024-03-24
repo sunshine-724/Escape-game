@@ -2246,7 +2246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4879518884986218507, guid: dca55c2113f224a1bb938375789775ca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.41
+      value: 32.3
       objectReference: {fileID: 0}
     - target: {fileID: 4879518884986218507, guid: dca55c2113f224a1bb938375789775ca, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2692,6 +2692,8 @@ MonoBehaviour:
   event2_1Manager: {fileID: 0}
   event3_1Manager: {fileID: 0}
   event3_2Manager: {fileID: 0}
+  ending: {fileID: 0}
+  enemy: {fileID: 0}
   soundBox_Bgm: {fileID: 0}
   player: {fileID: 1469648495}
   canvasEvent0: {fileID: 0}

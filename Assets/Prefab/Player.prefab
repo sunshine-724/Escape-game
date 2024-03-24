@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e875ac4ee3941819926addf98b22b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.06
+  speed: 0.05
   jumpForce: {x: 0, y: 15}
   isRightMove: 0
   isLeftMove: 0
@@ -91,9 +91,12 @@ MonoBehaviour:
   stepSound: {fileID: 527687864269609210}
   teleObject: []
   teleButton: []
+  stairManager: {fileID: 0}
+  stair: []
   poster: {fileID: 0}
   pc: {fileID: 0}
   coin: {fileID: 0}
+  door: {fileID: 0}
 --- !u!61 &5038662275246570315
 BoxCollider2D:
   m_ObjectHideFlags: 0
