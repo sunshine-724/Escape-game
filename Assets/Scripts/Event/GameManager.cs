@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     bool event10StartFlag = true; //イベント10を始めても良いか
 
-    [SerializeField] float ChangeScenePlayerXPositon; //プレイヤーがこのX座標より左に行ったらシーンを切り替える(シーン毎に数値が異なる)
+    [SerializeField] float ChangeScenePlayerXPositon; //プレイヤーがこのX座標より右に行ったらシーンを切り替える(シーン毎に数値が異なる)
 
 
     private void Awake()
@@ -339,7 +339,7 @@ public class GameManager : MonoBehaviour
             event10StartFlag = false;
             player.IsMove(false); //プレイヤーを止める
             player.Left(); //プレイヤーを強制的に左へ向かせる
-            StartCoroutine(ending.StartEndingText()); //エンディング開始
+            ending.EndingManager(); //エンディング開始
         }
     }
 }

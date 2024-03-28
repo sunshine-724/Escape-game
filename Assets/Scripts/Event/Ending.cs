@@ -5,17 +5,21 @@ using UnityEngine;
 public class Ending : MonoBehaviour
 {
     [SerializeField] Telop telop; //テロップ背景
-    [SerializeField] GameObject[] text; //各テキストオブジェクト（アクティブか非アクティブかで表示するテキストを切り替える)
-    [SerializeField] Appeartext[] appeartext; //各テキストを出現するためのクラス
+    [SerializeField] List<GameObject> text; //各テキストオブジェクト（アクティブか非アクティブかで表示するテキストを切り替える)
+    [SerializeField] List<Appeartext> appeartext; //各テキストを出現するためのクラス
 
+    [SerializeField] Player player; //プレイヤー
     [SerializeField] Enemy enemy; //敵キャラ（研究員のクラス）
 
     private int eventNumber; //今どのイベントかを示す
     public bool isMethod; //今メソッドを実行中（コルーチンを実行中）であるかどうか
+    [SerializeField] float EndPositonx; //フェードアウトし終了する時のプレイヤーの座標
+    [SerializeField] FadeOut Image_Fadeout; //フェードアウトする時の画像
 
     private void Awake()
     {
         eventNumber = 0; //最初は0
+
     }
     // Start is called before the first frame update
     void Start()
@@ -26,15 +30,39 @@ public class Ending : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if((eventNumber == appeartext.Count + 1) && (player.pos.x >= EndPositonx)){
+            Debug.Log("実行中");
+            Image_Fadeout.Fade(); //画面をフェードアウトする
+        }
     }
 
-    public IEnumerator StartEndingText()
+    public void EndingManager()
+    {
+        if (0 <= eventNumber && eventNumber < appeartext.Count)
+        {
+            StartCoroutine(StartEndingText());
+        }
+        else if (eventNumber == appeartext.Count)
+        {
+            //もし用意した全てのテキストを出力したら、研究員を左側に移動させる
+            isMethod = true;
+            text[eventNumber - 1].SetActive(false);
+            telop.gameObject.SetActive(false);
+            enemy.isLeftMove = true; //敵キャラを左側へと移動させる
+        }
+        else if(eventNumber == appeartext.Count+1)
+        {
+            player.IsMove(true);
+            enemy.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator StartEndingText()
     {
         int k; //カウンタ変数
 
         //もし用意した全てのテキストを出力したら、研究員を左側に移動させる
-        if(eventNumber == appeartext.Length)
+        if(eventNumber == appeartext.Count)
         {
             isMethod = true;
             text[eventNumber - 1].SetActive(false);
@@ -48,7 +76,7 @@ public class Ending : MonoBehaviour
         }
         else
         {
-            for (k = 0; k < appeartext.Length; k++)
+            for (k = 0; k < appeartext.Count; k++)
             {
                 if (k == eventNumber)
                 {
@@ -79,7 +107,7 @@ public class Ending : MonoBehaviour
                 }
             }
 
-            if (k == appeartext.Length)
+            if (k == appeartext.Count)
             {
                 Debug.Log("存在しないイベントナンバーです");
             }
@@ -94,7 +122,7 @@ public class Ending : MonoBehaviour
         if (!isMethod)
         {
             eventNumber++;
-            StartCoroutine(StartEndingText());
+            EndingManager();
         }
         else
         {

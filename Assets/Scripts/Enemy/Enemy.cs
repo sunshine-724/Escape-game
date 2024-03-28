@@ -16,10 +16,14 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] Ending ending; //endingクラス
 
+    [SerializeField] Se stepSound;
+
     private bool isHoming; //プレイヤーをホーミングしても良いかどうか
     public bool isRightMove; //右側に動いても良いか
     public bool isLeftMove; //左側に動いても良いか
     public Vector3 thisPosition; //このオブジェクトの現在の座標
+
+    private bool isRunStepSound; //走る時音を出しても良いか
 
     // Start is called before the first frame update
     void Start()
@@ -52,18 +56,32 @@ public class Enemy : MonoBehaviour
         if (isRightMove)
         {
             SetMotion("rightRun");
-        }else if (isLeftMove)
+            if (isRunStepSound)
+            {
+                StartCoroutine(RunStepSound());
+            }
+        }
+        else if (isLeftMove)
         {
             SetMotion("leftRun");
-            if(thisPosition.x <= 40)
+            if (isRunStepSound)
             {
-                player.IsMove(true);
-                this.gameObject.SetActive(false);
+                StartCoroutine(RunStepSound());
+            }
+
+            if (thisPosition.x <= 40)
+            {
+                ending.isMethod = false;
+                ending.InputZkey(); //次のイベントに移る
             }
         }
         else
         {
             SetMotion("idle");
+            if (!isRunStepSound)
+            {
+                StopCoroutine(RunStepSound()); //もし待機モーション時であればRun用のSEを止める
+            }
         }
 
         if(isRightMove || isLeftMove)
@@ -143,5 +161,13 @@ public class Enemy : MonoBehaviour
             isRightMove = false;
             isLeftMove = false;
         }
+    }
+
+    public IEnumerator RunStepSound()
+    {
+        isRunStepSound = false; //再生し終えるまで再生許可は与えない
+        yield return StartCoroutine(stepSound.Start_SE());
+        yield return new WaitForSeconds(0.3f); //少し補完を入れる
+        isRunStepSound = true; //再生し終えたので再度再生許可を与える
     }
 }

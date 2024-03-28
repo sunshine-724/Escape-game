@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
         isPC = false;
         isCoin = false;
         isDoor = false;
+        
         touchTeleportObject = -1; //最初はどことも接していないので-1
 
         IsMove(true); //初期状態ではtrue
