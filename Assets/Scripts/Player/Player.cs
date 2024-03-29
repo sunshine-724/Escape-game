@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     //フラグ関連
     //アクション関連
     private bool isTeleport; //テレポートをしても良いか
-    private bool isPoster; //ポスターの中身を表示したり、非表示にしたりしても良いか
     private bool isPC; //PCの中身を表示したり、非表示したりしても良いか
     private bool isCoin; //金庫にアクセスしても良いか
     private bool isDoor; //ドアにアクセスしても良いか
@@ -68,7 +67,7 @@ public class Player : MonoBehaviour
     [SerializeField] Stair[] stair; //各階段の段差;
 
     /*各イベントのオブジェクト*/
-    [SerializeField] Poster poster; //イベント4で使用するポスター
+    [SerializeField] List<InputEventObject> inputEventObject; //クリックすると特定の画面が開くオブジェクト
     [SerializeField] PC pc; //イベント4で使用するPC
     [SerializeField] Coin coin; //イベント4で使用するコイン
     [SerializeField] Door door; //イベント4で使用するドア
@@ -84,7 +83,6 @@ public class Player : MonoBehaviour
         isRunStepSound = true; //初期状態はtrue
 
         //アクション関連
-        isPoster = false;
         isPC = false;
         isCoin = false;
         isDoor = false;
@@ -152,10 +150,10 @@ public class Player : MonoBehaviour
                 } 
             }
 
-            /*ポスター関連*/
-            if (isPoster)
+            /*InputEventObject関連*/
+            for(int k = 0; k < inputEventObject.Count; k++)
             {
-                poster.checkStatus(); //ポスターを開いたり、閉じたりする
+                inputEventObject[k].ZKeyNotification();
             }
 
             /*PC関連*/
@@ -354,14 +352,8 @@ public class Player : MonoBehaviour
             }
         }
 
-        //もしポスターと接触していたら
-        if ((poster != null) && collision.gameObject == poster?.gameObject)
-        {
-            isPoster = true; //Zキーを押すとポスターの中身が表示させるようにする
-        }
-
         //もしPCを接触していたら
-        if((poster != null) && collision.gameObject == pc.gameObject)
+        if((pc != null) && collision.gameObject == pc.gameObject)
         {
             isPC = true; //Zキーを押すとPCの中身が表示させるようにする
         }
@@ -387,9 +379,6 @@ public class Player : MonoBehaviour
             Debug.Log("テレポーターから離れました");
             isTeleport = false; //Zキーを押しても反応しないようにする
             touchTeleportObject = -1; //どことも接していないので
-        }else if((poster != null) &&(collision.gameObject == poster.gameObject))
-        {
-            isPoster = false; //ポスターから離れるので中身を見る許可をなくす
         }else if((pc !=null) &&(collision.gameObject == pc.gameObject))
         {
             isPC = false; //PCから離れるので中身を見る許可をなくす
@@ -399,6 +388,10 @@ public class Player : MonoBehaviour
         }else if((door != null) &&(collision.gameObject == door.gameObject))
         {
             isDoor = false; //ドアにアクセスできないようにする
+        }
+        else
+        {
+           
         }
     }
     /*落下判定*/

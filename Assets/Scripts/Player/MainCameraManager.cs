@@ -15,18 +15,25 @@ public class MainCameraManager : MonoBehaviour
 
     void Awake()
     {
-        CameraPos = player.pos; //座標をプレイヤーと同じにする
-        CameraPos.z += -10;  //カメラの座標に補正をかける
-        mainCameraComponent.transform.position = CameraPos;
-        isMoveCamera = true;
+        if((0<= gameManager.EventNumber) && (gameManager.EventNumber <= 3)){
+            isMoveCamera = false;
+        }
+        else
+        {
+            isMoveCamera = true;
+        }
+
+        if (isMoveCamera)
+        {
+            CameraPos = player.pos; //座標をプレイヤーと同じにする
+            CameraPos.z += -10;  //カメラの座標に補正をかける
+            mainCameraComponent.transform.position = CameraPos;
+        }
     }
 
     // Start is called before the first frame update
     private void Start()
     {   
-        CameraPos = player.pos; //座標をプレイヤーと同じにする
-        CameraPos.z += -10;  //カメラの座標に補正をかける
-        mainCameraComponent.transform.position = CameraPos;
 
         if(gameManager.EventNumber == 3)
         {
@@ -38,20 +45,42 @@ public class MainCameraManager : MonoBehaviour
     void Update()
     {
         //イベント毎にカメラの挙動を変える
-        if(gameManager.EventNumber == 2)
+        switch (gameManager.EventNumber)
         {
-            if (isMoveCamera)
-            {
-                CameraPos.x = player.pos.x; //x座標をプレイヤーと同じにする
-                CameraPos.y = player.pos.y; //y座標をプレイヤーと同じにする
-            }
-        }
-        else if(gameManager.EventNumber >= 3)
-        {
-            CameraPos.x = player.pos.x; //x座標をプレイヤーのx座標と同じにする
+            case 0:
+                break;
+
+            case 1:
+                break;
+
+            case 2:
+                if (isMoveCamera)
+                {
+                    CameraPos.x = player.pos.x; //x座標をプレイヤーと同じにする
+                    CameraPos.y = player.pos.y; //y座標をプレイヤーと同じにする
+                }
+                break;
+
+            case 3:
+                if (isMoveCamera)
+                {
+                    CameraPos.x = player.pos.x; //x座標をプレイヤーと同じにする
+                    CameraPos.y = player.pos.y; //y座標をプレイヤーと同じにする
+                }
+                break;
+
+            default:
+                if(gameManager.EventNumber >= 4)
+                {
+                    CameraPos.x = player.pos.x; //x座標をプレイヤーのx座標と同じにする
+                }
+                break;
         }
 
-        mainCameraComponent.transform.position = CameraPos; //座標を更新する
+        if (isMoveCamera)
+        {
+            mainCameraComponent.transform.position = CameraPos; //座標を更新する
+        }
     }
 
     //カメラを反転させる
