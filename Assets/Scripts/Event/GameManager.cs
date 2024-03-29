@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Event3_1Manager event3_1Manager;
     [SerializeField] Event3_2Manager event3_2Manager;
 
+    //イベント4関連
+    [SerializeField] Event4_1Manager event4_1Manager;
     //イベント10関連
     [SerializeField] Ending ending; //エンディングを管理するクラス
     [SerializeField] Enemy enemy; //敵キャラ
@@ -52,7 +54,8 @@ public class GameManager : MonoBehaviour
             case 3:
                 event3_1Manager.Starting1();
                 break;
-
+            case 4:
+                
             default:
                 Debug.Log("そのようなイベントは存在しません");
                 break;

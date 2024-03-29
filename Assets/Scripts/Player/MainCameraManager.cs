@@ -15,7 +15,7 @@ public class MainCameraManager : MonoBehaviour
 
     void Awake()
     {
-        if((0<= gameManager.EventNumber) && (gameManager.EventNumber <= 3)){
+        if((0<= gameManager.EventNumber) && (gameManager.EventNumber <= 4)){
             isMoveCamera = false;
         }
         else
@@ -70,7 +70,7 @@ public class MainCameraManager : MonoBehaviour
                 break;
 
             default:
-                if(gameManager.EventNumber >= 4)
+                if(gameManager.EventNumber >= 5)
                 {
                     CameraPos.x = player.pos.x; //x座標をプレイヤーのx座標と同じにする
                 }
