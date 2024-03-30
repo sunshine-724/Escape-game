@@ -55,6 +55,10 @@ public class Image_Event1 : MonoBehaviour
                     Debug.Log("Appear終了");
                 }
             }
+            else
+            {
+                Debug.Log("imageコンポーネントが取得できていません");
+            }
         }
 
         if (isDisappear)
@@ -70,6 +74,10 @@ public class Image_Event1 : MonoBehaviour
                     isAppear = true;
                     Debug.Log("Disppear終了");
                 }
+            }
+            else
+            {
+                Debug.Log("imageコンポーネントが取得できていません");
             }
         }
       

@@ -364,7 +364,6 @@ public class GameManager : MonoBehaviour
             player.pos.x = ChangeScenePlayerXPositon + 0.5f;
             event10StartFlag = false;
             player.IsMove(false); //プレイヤーを止める
-            player.Left(); //プレイヤーを強制的に左へ向かせる
             ending.EndingManager(); //エンディング開始
         }
     }

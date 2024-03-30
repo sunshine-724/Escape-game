@@ -15,7 +15,8 @@ public class MainCameraManager : MonoBehaviour
 
     void Awake()
     {
-        if((0<= gameManager.EventNumber) && (gameManager.EventNumber <= 4)){
+        //EventNumberが０以上４以下または１０の場合追跡せずカメラを固定する
+        if(((0<= gameManager.EventNumber) && (gameManager.EventNumber <= 4))||(gameManager.EventNumber == 10)){
             isMoveCamera = false;
         }
         else

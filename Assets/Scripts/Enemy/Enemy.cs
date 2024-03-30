@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject runObject;
     [SerializeField] GameObject idleObject;
 
+    [SerializeField] float DisappearPositionX; //敵キャラが消えるX座標
     [SerializeField] Player player; //追いかける対象
     [SerializeField] float speed; //スピード
 
@@ -69,7 +70,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(RunStepSound());
             }
 
-            if (thisPosition.x <= 40)
+            if (thisPosition.x <= DisappearPositionX)
             {
                 ending.isMethod = false;
                 ending.InputZkey(); //次のイベントに移る
@@ -146,6 +147,21 @@ public class Enemy : MonoBehaviour
         else
         {
             Debug.Log("存在しないモーションです");
+        }
+    }
+
+    public void Rotation(string direction)
+    {
+        if (direction == "left")
+        {
+            this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
+        }else if(direction == "right")
+        {
+            this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        }
+        else
+        {
+            Debug.Log("存在しない方角です");
         }
     }
 
