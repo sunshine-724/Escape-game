@@ -23,7 +23,10 @@ public class GameManager : MonoBehaviour
 
     //イベント4関連
     [SerializeField] Event4_1Manager event4_1Manager;
+
     //イベント10関連
+    [SerializeField] Event10_1Manager event10_1Manager;
+
     [SerializeField] Ending ending; //エンディングを管理するクラス
     [SerializeField] Enemy enemy; //敵キャラ
 
@@ -55,7 +58,13 @@ public class GameManager : MonoBehaviour
                 event3_1Manager.Starting1();
                 break;
             case 4:
-                
+                event4_1Manager.Starting1();
+                break;
+
+            case 10:
+                event10_1Manager.Starting1();
+                break;
+
             default:
                 Debug.Log("そのようなイベントは存在しません");
                 break;
@@ -123,6 +132,10 @@ public class GameManager : MonoBehaviour
                 UpdateEvent3_AllTheTime();
                 break;
 
+            case 4:
+                UpdateEvent4_AllTheTime();
+                break;
+
             case 10:
                 UpdateEvent10_AllTheTime();
                 break;
@@ -150,6 +163,11 @@ public class GameManager : MonoBehaviour
 
             case 2:
                 soundBox_Bgm.SetActive(false); //bgmをオフにする
+                break;
+
+            case 5:
+                //フェードアウト実行後
+                SceneManager.LoadScene("Ending"); //次のシーンに移る
                 break;
 
             default:
@@ -334,15 +352,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void UpdateEvent4_AllTheTime()
+    {
+        
+    }
+
     void UpdateEvent10_AllTheTime()
     {
         if ((EventNumber == 10) && (player.pos.x >= ChangeScenePlayerXPositon) && (event10StartFlag))
         {
-            player.pos.x = 60.5f;
+            player.pos.x = ChangeScenePlayerXPositon + 0.5f;
             event10StartFlag = false;
             player.IsMove(false); //プレイヤーを止める
             player.Left(); //プレイヤーを強制的に左へ向かせる
             ending.EndingManager(); //エンディング開始
+        }
+    }
+
+    //特定のイベントマネージャーから通知が来たら値によって指定したメソッドを起動する
+    public void Notification(int number)
+    {
+        switch (number)
+        {
+            case 0:
+                StartCoroutine(event4_1Manager.Starting2());
+                break;
+
+            case 1:
+                nextEvent = true; //次のイベント（シーンに移る)
+                break;
+
+            default:
+                Debug.Log("そのような通知は存在しません");
+                break;
         }
     }
 }

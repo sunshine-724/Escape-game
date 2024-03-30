@@ -1709,7 +1709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &889546814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2650,7 +2650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261502dbe91784209811aa2ba757b81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventNumber: 2
+  EventNumber: 0
   event1_1Manager: {fileID: 683155420}
   event1_2Manager: {fileID: 174651855}
   event1_3Manager: {fileID: 625323708}
@@ -2658,6 +2658,8 @@ MonoBehaviour:
   event2_1Manager: {fileID: 1235684294}
   event3_1Manager: {fileID: 0}
   event3_2Manager: {fileID: 0}
+  event4_1Manager: {fileID: 0}
+  event10_1Manager: {fileID: 0}
   ending: {fileID: 0}
   enemy: {fileID: 0}
   soundBox_Bgm: {fileID: 521248654}
@@ -3458,7 +3460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1788422390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3843,7 +3845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 1984707005}
-  str: "\u300C\u30FC\u65E5\u4ED8\uFF1A\uFF12\uFF13\uFF10\uFF10\u5E74\u3000\uFF14\u6708\uFF11\u65E5\u3000\uFF11\uFF14\uFF1A\uFF12\uFF13\u3000\u5834\u6240\uFF1A\uFF1F\uFF1F\u5730\u533A\uFF13\u4E01\u76EE\u300D"
+  str: "\u30A2\u30A6\u30BF\u30FC\u5E02\u7B2C\u4E09\u5730\u533AG\u793E"
   str2: 
   textSpeed: 0.05
   textSpeed2: 0

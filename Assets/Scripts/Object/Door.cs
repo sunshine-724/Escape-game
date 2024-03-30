@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Door : MonoBehaviour
 {
     [SerializeField] Inventory inventory;
+    [SerializeField] GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class Door : MonoBehaviour
     {
         if (inventory.CheckInventory("Key"))
         {
-            SceneManager.LoadScene("Ending");
+            gameManager.Notification(0); //次のイベントに行くよう通知を与える
         }
         else
         {

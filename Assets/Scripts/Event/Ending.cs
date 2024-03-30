@@ -30,15 +30,26 @@ public class Ending : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if((eventNumber == appeartext.Count + 1) && (player.pos.x >= EndPositonx)){
-            Debug.Log("実行中");
-            Image_Fadeout.Fade(); //画面をフェードアウトする
+        if((eventNumber >= appeartext.Count) && (player.pos.x >= EndPositonx)){
+            eventNumber = -1;
+            EndingManager();
         }
     }
 
     public void EndingManager()
     {
-        if (0 <= eventNumber && eventNumber < appeartext.Count)
+        if(eventNumber < 0)
+        {
+            switch (eventNumber)
+            {
+                case -1:
+                    player.IsMove(false); //プレイヤーを止める
+                    StartCoroutine(Image_Fadeout.Fade()); //画面をフェードアウトする
+                    eventNumber--;
+                    break;
+            }
+        }
+        else if (0 <= eventNumber && eventNumber < appeartext.Count)
         {
             StartCoroutine(StartEndingText());
         }

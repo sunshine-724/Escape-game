@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class EndingDoor : MonoBehaviour
+public class Event10_1Manager : MonoBehaviour
 {
+    [SerializeField] FadeIn image_Event10_1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +18,8 @@ public class EndingDoor : MonoBehaviour
         
     }
 
-    public void OpenTheDoor()
+    public void Starting1()
     {
-        Debug.Log("終了");
+        StartCoroutine(image_Event10_1.Fade()); //フェードイン実行
     }
 }
