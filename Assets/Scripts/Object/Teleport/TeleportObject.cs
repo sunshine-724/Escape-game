@@ -58,7 +58,7 @@ public class TeleportObject :MonoBehaviour
         if(teleportLocationObject[isColor] != null)
         {
             player.pos.x = teleportLocationObject[isColor].transform.position.x;
-            player.pos.y = teleportLocationObject[isColor].transform.position.y;
+            player.pos.y = teleportLocationObject[isColor].transform.position.y+0.2f; //補正
 
             Debug.Log("転送位置は" + player.pos.x + "," + player.pos.y + "です");
             player.transform.position = player.pos;

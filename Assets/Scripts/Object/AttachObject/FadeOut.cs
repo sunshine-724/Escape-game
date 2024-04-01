@@ -14,6 +14,8 @@ public class FadeOut : MonoBehaviour
 
     bool isActive; //フェードアウトを実行しても良いか
 
+    public bool isEnd { get; private set; } //フェードアウトが終了したらフラグを立てる
+
 
     Image image; //imageコンポーネント
     Text text; //テキストコンポーネント
@@ -24,6 +26,7 @@ public class FadeOut : MonoBehaviour
         text =this.GetComponent<Text>(); //このオブジェクトのテキストコンポーネントを取得する
 
         alpha = 0.5f; //初期値
+        isEnd = false;
     }
 
     // Start is called before the first frame update
@@ -70,9 +73,11 @@ public class FadeOut : MonoBehaviour
 
         while (isActive)
         {
+            
             yield return null;
         }
 
+        isEnd = true;
         yield return fadeSpeed;
     }
 }

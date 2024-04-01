@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.05
-  jumpForce: {x: 0, y: 20}
+  jumpForce: {x: 0, y: 30}
   isRightMove: 0
   isLeftMove: 0
   runObject: {fileID: 3914825934030195730}
@@ -97,6 +97,7 @@ MonoBehaviour:
   pc: {fileID: 0}
   coin: {fileID: 0}
   door: {fileID: 0}
+  moveText: {fileID: 0}
 --- !u!61 &5038662275246570315
 BoxCollider2D:
   m_ObjectHideFlags: 0

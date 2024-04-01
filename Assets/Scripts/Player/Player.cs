@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         if(stairManager != null)
         {
             stairSize = stairManager.transform.localScale.x; //段差のサイズを取得
-            stairForce = new Vector2(0.0f, (10.0f) * stairSize); //サイズによって大きさを変える
+            stairForce = new Vector2(0.0f, (20.0f) * stairSize); //サイズによって大きさを変える
         }
     }
 
