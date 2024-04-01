@@ -7,6 +7,8 @@ public class InputEventObject : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] GameObject OutputPaper;
 
+    [SerializeField] MoveText moveText; //スマートフォンに表示させるテキスト集
+
     public bool isPlayer { get; private set; } //プレイヤーと接触しているかどうかを確認するフラグ
 
     private void Awake()
@@ -53,7 +55,6 @@ public class InputEventObject : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("何か触れました");
         if (collision.gameObject == player.gameObject)
         {
             isPlayer = true;
@@ -68,12 +69,32 @@ public class InputEventObject : MonoBehaviour
         }
     }
 
-    //プレイヤーからZキーを受け取ったらフラグが立っているかどうか確認する
+    //プレイヤーからZキーを受け取ったらステータスを確認する
     public void ZKeyNotification()
     {
         if (isPlayer)
         {
             checkStatus();
+        }
+    }
+
+
+    /*スマートフォン関連*/
+    //もし下矢印が押された場合
+    public void DownKeyNotification()
+    {
+        if (moveText && OutputPaper)
+        {
+            moveText.MoveDown();
+        }
+    }
+
+    //もし上矢印が押された場合
+    public void UpKeyNotification()
+    {
+        if(moveText && OutputPaper)
+        {
+            moveText.MoveUp();
         }
     }
 }

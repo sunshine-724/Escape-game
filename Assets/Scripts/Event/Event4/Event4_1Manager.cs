@@ -34,7 +34,6 @@ public class Event4_1Manager : MonoBehaviour
     {
         image_Event4_2.gameObject.SetActive(true);
         yield return StartCoroutine(image_Event4_2.Fade()); //フェードアウト実行
-
         gameManager.Notification(1); //シーンチェンジ
     }
 }

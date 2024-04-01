@@ -61,10 +61,6 @@ public class GameManager : MonoBehaviour
                 event4_1Manager.Starting1();
                 break;
 
-            case 10:
-                event10_1Manager.Starting1();
-                break;
-
             default:
                 Debug.Log("そのようなイベントは存在しません");
                 break;
@@ -83,6 +79,10 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 3:
+                break;
+
+            case 10:
+                StartCoroutine(event10_1Manager.Starting1());
                 break;
 
             default:
@@ -368,7 +368,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //特定のイベントマネージャーから通知が来たら値によって指定したメソッドを起動する
+    //特定のイベントから通知が来たら値によって指定したメソッドを起動する
     public void Notification(int number)
     {
         switch (number)
@@ -378,7 +378,11 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 1:
-                nextEvent = true; //次のイベント（シーンに移る)
+                nextEvent = true; //次のイベント（シーンに移る) イベント4で使用
+                break;
+
+            case 2:
+                event10_1Manager.Starting2();
                 break;
 
             default:

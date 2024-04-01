@@ -72,6 +72,8 @@ public class Player : MonoBehaviour
     [SerializeField] Coin coin; //イベント4で使用するコイン
     [SerializeField] Door door; //イベント4で使用するドア
 
+    [SerializeField] MoveText moveText;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -188,7 +190,11 @@ public class Player : MonoBehaviour
             /*ドア関連*/
             if (isDoor)
             {
-                door.OpenTheDoor();
+                if (inventory.CheckInventory("Key"))
+                {
+                    isDoor = false;
+                    door.OpenTheDoor();
+                }
             }
         }
 
@@ -253,14 +259,37 @@ public class Player : MonoBehaviour
 
         }
         //垂直キーを取得する
-        if (((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))) && (isJumping))
+        if (((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))))
         {
-            idleObject.SetActive(false);
-            runObject.SetActive(false);
-            jumpObject.SetActive(true);
-            StartCoroutine(jumpSound.Start_SE());
-            Jump(); //ジャンプする
-            isJumping = false; //連続でジャンプできないようにする
+            if (isJumping)
+            {
+                idleObject.SetActive(false);
+                runObject.SetActive(false);
+                jumpObject.SetActive(true);
+                StartCoroutine(jumpSound.Start_SE());
+                Jump(); //ジャンプする
+                isJumping = false; //連続でジャンプできないようにする
+            }
+
+            if (inputEventObject[0] != null)
+            {
+                //もし、何かしらの画面を開いていたら(nullチェック)
+                for (int k = 0; k < inputEventObject.Count; k++)
+                {
+                    inputEventObject[k].UpKeyNotification();
+                }
+            }
+        }else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)))
+        {
+            //(nullチェック)
+            if (inputEventObject[0] != null)
+            {
+                //もし、何かしらの画面を開いていたら
+                for (int k = 0; k < inputEventObject.Count; k++)
+                {
+                    inputEventObject[k].DownKeyNotification();
+                }
+            }
         }
 
         /*毎フレーム落下判定する*/
@@ -279,9 +308,7 @@ public class Player : MonoBehaviour
                 Debug.Log("実行中");
             }
         }
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
+
         //床の衝突判定
         if (planeManager != null)
         {
@@ -292,7 +319,7 @@ public class Player : MonoBehaviour
                     isGrounded = true; //地面に接地しているのでtrue
 
                     //その床がジャンプを可能としているかタグでチェック
-                    if(collision.gameObject.tag == "isJump")
+                    if (collision.gameObject.tag == "isJump")
                     {
                         isJumping = true;
                     }
@@ -300,6 +327,10 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -432,11 +463,13 @@ public class Player : MonoBehaviour
         {
             isRightMove = true;
             isLeftMove = true;
+            isJumping = true;
         }
         else
         {
             isRightMove = false;
             isLeftMove = false;
+            isJumping = false;
         }
     }
 
