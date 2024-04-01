@@ -42,6 +42,11 @@ public class FadeOut : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         if (isActive)
         {
             //もし指定したコンポーネントがnullではなかったらフェードアウトさせる
@@ -57,7 +62,7 @@ public class FadeOut : MonoBehaviour
 
             alpha += fadeSpeed;
 
-            if(alpha >= 1.1f)
+            if (alpha >= 1.1f)
             {
                 Debug.Log("フェードアウトを終了しました");
                 isActive = false;

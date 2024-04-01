@@ -30,9 +30,14 @@ public class Image_BlackWipe_FromLeftToRight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         if (isActive)
         {
-            offsetMaxXY.x += 2.0f; //徐々に右に寄せに行く
+            offsetMaxXY.x += 5.0f; //徐々に右に寄せに行く
 
             //更新
             rectTransformComponent.offsetMin = offsetMinXY;

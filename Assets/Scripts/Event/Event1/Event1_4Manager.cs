@@ -5,7 +5,11 @@ using UnityEngine;
 public class Event1_4Manager : MonoBehaviour
 {
     [SerializeField] TelopBackGround telopBackGround;
-    [SerializeField] TextObject text1_4;
+    [SerializeField] TextObject text1_4_1;
+    [SerializeField] TextObject text1_4_2;
+    [SerializeField] TextObject text1_4_3;
+    [SerializeField] TextObject text1_4_4;
+
 
     [SerializeField] Image_Event1 image_Event1_4_1;
 
@@ -30,7 +34,34 @@ public class Event1_4Manager : MonoBehaviour
     public IEnumerator Starting1()
     {
         nowMethod = true;
-        yield return StartCoroutine(text1_4.Starting()); //テキストを出力させる
+        yield return StartCoroutine(text1_4_1.Starting()); //テキストを出力させる
+        nowMethod = false;
+        nowEvent++;
+    }
+
+    public IEnumerator Starting2()
+    {
+        nowMethod = true;
+        text1_4_1.gameObject.SetActive(false);
+        yield return StartCoroutine(text1_4_2.Starting()); //テキストを出力させる
+        nowMethod = false;
+        nowEvent++;
+    }
+
+    public IEnumerator Starting3()
+    {
+        nowMethod = true;
+        text1_4_2.gameObject.SetActive(false);
+        yield return StartCoroutine(text1_4_3.Starting()); //テキストを出力させる
+        nowMethod = false;
+        nowEvent++;
+    }
+
+    public IEnumerator Starting4()
+    {
+        nowMethod = true;
+        text1_4_3.gameObject.SetActive(false);
+        yield return StartCoroutine(text1_4_4.Starting()); //テキストを出力させる
         nowMethod = false;
         nowEvent++;
     }

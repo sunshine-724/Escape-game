@@ -29,6 +29,7 @@ public class Ending : MonoBehaviour
     [SerializeField] GameObject endRollText_ParentObject; //親オブジェクト
     [SerializeField] List<GameObject> endRollText;
     [SerializeField] List<Appeartext> endRollAppearText;
+    [SerializeField] GameObject soundBox_Ending;
     [SerializeField] RectTransform rect_NameText; //担当者の名前が書かれているテキスト集
 
     private void Awake()
@@ -156,6 +157,9 @@ public class Ending : MonoBehaviour
                 break;
 
             case 16:
+                //BGM開始
+                Debug.Log("BGMを開始しました");
+                soundBox_Ending.SetActive(true);
                 //エンドロールテキスト0
                 StartCoroutine(StartEndRollText());
                 break;
@@ -179,6 +183,7 @@ public class Ending : MonoBehaviour
             case 20:
                 //タイトル画面に戻る
                 Debug.Log("ゲーム終了");
+                SceneManager.LoadScene("Title");
                 break;
 
             default:
@@ -304,7 +309,7 @@ public class Ending : MonoBehaviour
         if(rect_NameText != null)
         {
             Vector3 pos = rect_NameText.anchoredPosition;
-            if(pos.y <= 415.0f)
+            if(pos.y <= 535.0f)
             {
                 isMethod = true;
                 pos.y += 0.25f; //適宜調整

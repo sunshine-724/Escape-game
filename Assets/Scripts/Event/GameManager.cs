@@ -269,6 +269,17 @@ public class GameManager : MonoBehaviour
             switch (event1_4Manager.nowEvent)
             {
                 case 2:
+                    StartCoroutine(event1_4Manager.Starting2());
+                    break;
+
+                case 3:
+                    StartCoroutine(event1_4Manager.Starting3());
+                    break;
+
+                case 4:
+                    StartCoroutine(event1_4Manager.Starting4());
+                    break;
+                case 5:
                     StartCoroutine(event1_4Manager.Ending());
                     break;
                 default:

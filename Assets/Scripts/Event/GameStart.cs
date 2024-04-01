@@ -43,13 +43,13 @@ public class GameStart : MonoBehaviour
     {
         if (storyObject.activeSelf)
         {
-            storyButton.SetActive(false); //一時的にSTORYボタンが反応できないようにする
+            storyButton.SetActive(true); //STORYボタンが反応できるようにする
             storyObject.SetActive(false);
         }
         else
         {
             storyObject.SetActive(true);
-            storyButton.SetActive(true); //STORYボタンが反応できるようにする
+            storyButton.SetActive(false); //一時的にSTORYボタンが反応できないようにする
         }
     }
 }

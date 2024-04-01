@@ -39,7 +39,12 @@ public class FadeIn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isActive == true)
+        
+    }
+
+    private void FixedUpdate()
+    {
+        if (isActive == true)
         {
             //もし指定したコンポーネントがnullではなかったらフェードインさせる
             if (image != null)
@@ -54,7 +59,7 @@ public class FadeIn : MonoBehaviour
 
             alpha -= fadeSpeed;
 
-            if(alpha <= -0.1f)
+            if (alpha <= -0.1f)
             {
                 Debug.Log("フェードインを終了しました");
                 isActive = false; //フェードインをやめさせる

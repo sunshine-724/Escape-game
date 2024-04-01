@@ -440,14 +440,14 @@ public class Player : MonoBehaviour
     public void Right()
     {
         this.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); //元の向き（右側に戻す)
-        this.pos.x += speed;
+        this.pos.x += speed*Time.deltaTime;
         this.transform.position = this.pos; //座標を更新
 
     }
     public void Left()
     {
         this.transform.localRotation = Quaternion.Euler(0.0f, 180f, 0.0f); //親オブジェクトであるPlayerを反転させる
-        this.pos.x -= speed;
+        this.pos.x -= speed*Time.deltaTime;
         this.transform.position = this.pos; //座標を更新
     }
 

@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.005
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!1 &1573483258832427479
 GameObject:
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.005
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!1 &7196293914269552583
 GameObject:
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.005
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!114 &3792689347101667129
 MonoBehaviour:

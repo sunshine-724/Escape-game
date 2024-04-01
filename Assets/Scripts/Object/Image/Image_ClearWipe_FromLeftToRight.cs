@@ -32,16 +32,21 @@ public class Image_ClearWipe_FromLeftToRight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         if (isActive)
         {
-            offsetMinXY.x += 3.0f; //徐々に右に寄せに行く
+            offsetMinXY.x += 5.0f; //徐々に右に寄せに行く
 
             //更新
             rectTransformComponent.offsetMin = offsetMinXY;
             rectTransformComponent.offsetMax = offsetMaxXY;
 
             //完全に透明化したらやめさせる
-            if (offsetMinXY.x  > widthLength)
+            if (offsetMinXY.x > widthLength)
             {
                 isActive = false;
                 Debug.Log("終了");

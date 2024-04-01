@@ -16,11 +16,15 @@ public class Image_Event1 : MonoBehaviour
     private const float DefaultPictureHeight = 547;
     private float shakeWide; //振れ幅（片方)
     private int shakePattern; //0:上 1:真ん中 2:下 3:真ん中 0:上の状態にある
+    private bool isShake; //画像を振っても良いか
+    private int shakeNumber; //何回画像を振ったか
+
     private RectTransform ThisObjectTransform; //transformコンポーネント
 
     private bool isAppear;
     private bool isDisappear;
     private float alpha;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +33,9 @@ public class Image_Event1 : MonoBehaviour
         ThisObjectTransform = this.GetComponent<RectTransform>();
         shakeWide = Mathf.Abs((ThisObjectTransform.sizeDelta.y - DefaultPictureHeight)/2); //振れ幅取得
 
+        //初期化作業
+        shakeNumber = 0;
+        isShake = false;
         isAppear = false;
         isDisappear = false;
         alpha = 0.0f; //初期値は0
@@ -80,28 +87,11 @@ public class Image_Event1 : MonoBehaviour
                 Debug.Log("imageコンポーネントが取得できていません");
             }
         }
-      
     }
 
-    public IEnumerator ThisObjectFadeIn()
+    private void FixedUpdate()
     {
-        yield return StartCoroutine(fadeIn.Fade()); //フェードインする
-    }
-
-    public IEnumerator ThisObjectFadeOut()
-    {
-        yield return StartCoroutine(fadeOut.Fade()); //フェードアウトする
-    }
-
-    //一定時間画像を揺らす
-    public IEnumerator ImageShake()
-    {
-        Debug.Log("振れ幅は"+ThisObjectTransform.sizeDelta.y + "-" + DefaultPictureHeight+"="+shakeWide);
-        //最初,上にずらす
-        imagePos.y += shakeWide;
-
-        //とりあえず50回ゆらす
-        for(int k = 0; k <1500; k++)
+        if (isShake)
         {
             switch (shakePattern)
             {
@@ -126,10 +116,45 @@ public class Image_Event1 : MonoBehaviour
                     break;
             }
 
-            ThisObjectTransform.anchoredPosition = imagePos; //座標を更新する 
+            shakeNumber++;
 
-            yield return new WaitForSeconds(1/10000000000000000f); //秒数は適宜調整
+            ThisObjectTransform.anchoredPosition = imagePos; //座標を更新する
+
+            if(shakeNumber >= 300)
+            {
+                isShake = false;
+            }
         }
+    }
+
+    public IEnumerator ThisObjectFadeIn()
+    {
+        yield return StartCoroutine(fadeIn.Fade()); //フェードインする
+    }
+
+    public IEnumerator ThisObjectFadeOut()
+    {
+        yield return StartCoroutine(fadeOut.Fade()); //フェードアウトする
+    }
+
+    //一定時間画像を揺らす
+    public IEnumerator ImageShake()
+    {
+        Vector3 startpos = ThisObjectTransform.anchoredPosition; //初期の座標を格納する
+        Debug.Log("振れ幅は"+ThisObjectTransform.sizeDelta.y + "-" + DefaultPictureHeight+"="+shakeWide);
+        //最初,上にずらす
+        imagePos.y += shakeWide;
+
+        isShake = true;
+
+        while (isShake)
+        {
+            yield return null; //画像を振り終えるまでメソッドを待機させる
+        }
+        //とりあえず1500回ゆらす
+        ThisObjectTransform.anchoredPosition = startpos; //振動を終えたら戻す
+
+        yield return null;
     }
 
     /*警報の画像の時赤色の画像の透明度を調整してチカチカを表現する*/
