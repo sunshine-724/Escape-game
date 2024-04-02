@@ -12,7 +12,9 @@ public class Ending : MonoBehaviour
 
     private int eventNumber; //今どのイベントかを示す
 
+    //入力許可関係
     public bool isMethod; //今メソッドを実行中（コルーチンを実行中）であるかどうか
+    private bool isEvent0End; //イベント０が終了したかどうか
 
     [SerializeField] Image_Event1 image_Siren; //赤色の画像をチカチカさせる時のクラス
     [SerializeField] SoundBoxScript soundBox; //サイレンを鳴らすクラス
@@ -38,6 +40,7 @@ public class Ending : MonoBehaviour
         textNumber = 0; //同じく0
         endRollTextNumber = 0; //同じく0
 
+        isEvent0End = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -68,9 +71,10 @@ public class Ending : MonoBehaviour
         switch (eventNumber)
         {
             case 0:
-                //テキスト0
+                //テキスト0(自動的に発生する)
                 telop.gameObject.SetActive(true);
                 StartCoroutine(StartEndingText());
+                isEvent0End = true;
                 break;
 
             case 1:
@@ -213,6 +217,7 @@ public class Ending : MonoBehaviour
                         {
                             text[k - 1].SetActive(false); //要素外アクセスを防ぐ
                         }
+                        Debug.Log(k + "番目のテキストを出力します");
                         text[k].SetActive(true);
                         yield return StartCoroutine(appeartext[k].AppearCenterText()); //メソッド終了(全てのテキストを出す）まで待つ
                         textNumber++;
@@ -274,7 +279,8 @@ public class Ending : MonoBehaviour
     //GameManagerでZキーが押されるのを感知したらこのメソッドが動く
     public void InputZkey()
     {
-        if (!isMethod)
+        //eventNumber0は自動的に発生するので受け付けない
+        if ((!isMethod) && (isEvent0End))
         {
             eventNumber++;
             EndingManager();
@@ -295,6 +301,7 @@ public class Ending : MonoBehaviour
         yield return new WaitForSeconds(5.0f); //しばらくの間サイレンを鳴らす
         image_Siren.EndImageFadeInOut();
         soundBox.gameObject.SetActive(false); //音を止める
+        Debug.Log("音を鳴らすのをやめました");
         isMethod = false;
     }
 

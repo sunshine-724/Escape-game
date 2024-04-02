@@ -393,7 +393,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 2:
-                event10_1Manager.Starting2();
+                StartCoroutine(event10_1Manager.Starting2());
                 break;
 
             default:

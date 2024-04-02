@@ -22,16 +22,19 @@ public class Event10_1Manager : MonoBehaviour
 
     public IEnumerator Starting1()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         StartCoroutine(image_Event10_1.Fade()); //フェードイン実行
         //ドアを開閉する
         door.OpenTheDoor();
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
     }
 
-    public void Starting2()
+    public IEnumerator Starting2()
     {
+        yield return new WaitForSeconds(0.5f);
         player.gameObject.SetActive(true);
         door.CloseTheDoor();
+
+        yield return null;
     }
 }

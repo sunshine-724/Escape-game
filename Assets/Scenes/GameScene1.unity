@@ -2785,7 +2785,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6fe6859c1959b4d719b8babe2c853912, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d7643911180eb479a844d1d517dfd65d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -3605,7 +3605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -987.4999, y: 0}
+  m_AnchoredPosition: {x: -987.4998, y: 0}
   m_SizeDelta: {x: 0, y: 547}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1671401673
@@ -5010,7 +5010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3419b2c5f08a4d20abebd397baa5f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.005
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!114 &2044633090
 MonoBehaviour:
@@ -5138,7 +5138,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2787796230950598619, guid: e6c47b80f3f3c4692aa1f01d89618b43, type: 3}
       propertyPath: fadeSpeed
-      value: 0.01
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 4028132973264067507, guid: e6c47b80f3f3c4692aa1f01d89618b43, type: 3}
       propertyPath: m_Pivot.x
@@ -5226,7 +5226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6406403610281814105, guid: e6c47b80f3f3c4692aa1f01d89618b43, type: 3}
       propertyPath: fadeSpeed
-      value: 0.01
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 7196293914269552583, guid: e6c47b80f3f3c4692aa1f01d89618b43, type: 3}
       propertyPath: m_Name
@@ -5234,7 +5234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8270658221743134717, guid: e6c47b80f3f3c4692aa1f01d89618b43, type: 3}
       propertyPath: fadeSpeed
-      value: 0.01
+      value: 0.015
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5902,7 +5902,7 @@ PrefabInstance:
     - target: {fileID: 1046416231010952175, guid: 1ee4f568ebc9b482c9f16fe54531d749, type: 3}
       propertyPath: source
       value: 
-      objectReference: {fileID: 8300000, guid: 6fe6859c1959b4d719b8babe2c853912, type: 3}
+      objectReference: {fileID: 8300000, guid: d7643911180eb479a844d1d517dfd65d, type: 3}
     - target: {fileID: 3658419831586050227, guid: 1ee4f568ebc9b482c9f16fe54531d749, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6019,6 +6019,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 650658828}
+    - target: {fileID: 674690558228980716, guid: dca55c2113f224a1bb938375789775ca, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1602956084}
     - target: {fileID: 674690558228980716, guid: dca55c2113f224a1bb938375789775ca, type: 3}
       propertyPath: teleObject0
       value: 

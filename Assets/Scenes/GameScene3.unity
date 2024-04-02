@@ -905,7 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dfeceab7b264ef981f986983e2089d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.001
+  fadeSpeed: 0.01
   specifyAlphaMax: 0
 --- !u!1 &640136214
 GameObject:
@@ -1976,6 +1976,14 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1177870710}
+    - target: {fileID: 674690558228980716, guid: dca55c2113f224a1bb938375789775ca, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1810985899}
+    - target: {fileID: 674690558228980716, guid: dca55c2113f224a1bb938375789775ca, type: 3}
+      propertyPath: jumpForce.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 674690558228980716, guid: dca55c2113f224a1bb938375789775ca, type: 3}
       propertyPath: planeManager
       value: 

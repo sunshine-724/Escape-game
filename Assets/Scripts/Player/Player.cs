@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Unity.Collections.Unicode;
+using System.Linq;
 
 /*プレイヤーオブジェクトにアタッチする*/
 public class Player : MonoBehaviour
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb; //このオブジェクトのコンポーネント
 
     /*オブジェクトを取得する*/
+    [SerializeField] GameManager gameManager;
     /*子オブジェクト*/
     [SerializeField] GameObject runObject; //キャラが走る
     [SerializeField] GameObject idleObject; //キャラが待機する
@@ -204,6 +206,7 @@ public class Player : MonoBehaviour
         {
             if (isGrounded)
             {
+                Debug.Log("右側に移動中");
                 idleObject.SetActive(false);
                 jumpObject.SetActive(false);
                 runObject.SetActive(true);
@@ -223,8 +226,8 @@ public class Player : MonoBehaviour
         {
             if (isGrounded)
             {
+                Debug.Log("左側に移動中");
                 idleObject.SetActive(false);
-                jumpObject.SetActive(false);
                 runObject.SetActive(true);
                 if (isRunStepSound)
                 {
@@ -243,8 +246,8 @@ public class Player : MonoBehaviour
             //待機モーション
             if (isGrounded)
             {
+                Debug.Log("待機中");
                 runObject.SetActive(false);
-                jumpObject.SetActive(false);
                 idleObject.SetActive(true);
             }
             else
@@ -263,16 +266,15 @@ public class Player : MonoBehaviour
         {
             if (isJumping)
             {
-                idleObject.SetActive(false);
-                runObject.SetActive(false);
-                jumpObject.SetActive(true);
-                StartCoroutine(jumpSound.Start_SE());
+                Debug.Log("ジャンプしました");
                 Jump(); //ジャンプする
                 isJumping = false; //連続でジャンプできないようにする
             }
 
-            if (inputEventObject[0] != null)
+            //nullチェック
+            if (inputEventObject?.Any() == true)
             {
+                
                 //もし、何かしらの画面を開いていたら(nullチェック)
                 for (int k = 0; k < inputEventObject.Count; k++)
                 {
@@ -304,6 +306,8 @@ public class Player : MonoBehaviour
         {
             if (collision.gameObject == stair[k].gameObject)
             {
+                jumpObject.SetActive(false);
+                runObject.SetActive(true);
                 this.rb.AddForce(stairForce, ForceMode2D.Impulse); //垂直方法へと力を加える
                 Debug.Log("実行中");
             }
@@ -317,6 +321,7 @@ public class Player : MonoBehaviour
                 if (collision.gameObject == planeManager.plane[k])
                 {
                     isGrounded = true; //地面に接地しているのでtrue
+                    jumpObject.SetActive(false);
 
                     //その床がジャンプを可能としているかタグでチェック
                     if (collision.gameObject.tag == "isJump")
@@ -342,6 +347,16 @@ public class Player : MonoBehaviour
             {
                 if (collision.gameObject == planeManager.plane[k])
                 {
+                    idleObject.SetActive(false);
+                    runObject.SetActive(false);
+                    if((gameManager.EventNumber == 2) && (this.pos.x >= -6.5)){
+                        /*特定の条件下ではジャンプしない*/
+                    }
+                    else
+                    {
+                        jumpObject.SetActive(true); //ジャンプオブジェクトをアクティブにする
+                        StartCoroutine(jumpSound.Start_SE());
+                    }
                     isGrounded = false; //地面から離れたのでfalse
                     break;  //地面は一つしか接しないのでこれ以上検索をかける必要がない
                 }

@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
             SetMotion("rightRun");
             if (isRunStepSound)
             {
+                ending.isMethod = true;
                 StartCoroutine(RunStepSound());
             }
         }
@@ -67,6 +68,7 @@ public class Enemy : MonoBehaviour
             SetMotion("leftRun");
             if (isRunStepSound)
             {
+                ending.isMethod = true;
                 StartCoroutine(RunStepSound());
             }
 
