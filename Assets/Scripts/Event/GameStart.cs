@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/*ゲームをスタートするためのボタンを押した時のスクリプト*/
+/*ゲームをスタートするためのボタンの挙動をまとめたスクリプト*/
 
 public class GameStart : MonoBehaviour
 {
+    [SerializeField] GameObject storyObject; //ストーリーを説明する際に必要なオブジェクトをまとめた親オブジェクト
+    [SerializeField] GameObject storyButton; //STORYボタン
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,13 +22,13 @@ public class GameStart : MonoBehaviour
 
     }
 
-    //ボタンがクリックされたらGameSceneに移動する
+    //StartボタンがクリックされたらGameScene1に移動する
     public void ClickStart()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("GameScene1");
     }
 
-    //ゲーム終了:ボタンから呼び出す
+    //Returnボタンがクリックされたらゲームをやめる
     public void EndGame()
     {
 #if UNITY_EDITOR
@@ -33,5 +36,20 @@ public class GameStart : MonoBehaviour
 #else
         Application.Quit();//ゲームプレイ終了(ビルドでプレイ時)
 #endif
+    }
+
+    //Storyボタンがクリックされたら説明画面を表示し、再度クリックされたら閉じる
+    public void ExplainStory()
+    {
+        if (storyObject.activeSelf)
+        {
+            storyButton.SetActive(true); //STORYボタンが反応できるようにする
+            storyObject.SetActive(false);
+        }
+        else
+        {
+            storyObject.SetActive(true);
+            storyButton.SetActive(false); //一時的にSTORYボタンが反応できないようにする
+        }
     }
 }
